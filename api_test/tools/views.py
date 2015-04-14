@@ -97,16 +97,20 @@ def get_sign(dict):
 	return sign
 
 
-def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html", api_host = None, api_port = None, api_function = None ):
+def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html", api_host = None, api_port = None, before_sign = None, after_sign = None ):
 	if req.method == 'POST':
 		form = template_form(req.POST)
 		dict = {} 
 		for item in req.POST:
 			dict[item] = req.POST[item]
-		dict['sign'] =get_sign(dict)
-		
-		if api_function != None:
-			api_function(dict)
+
+		if before_sign != None:
+			before_sign(dict)
+
+		dict['sign'] = get_sign(dict)
+
+		if after_sign != None:
+			after_sign(dict)
 
 		request_msg = dict_to_str(dict)
 
