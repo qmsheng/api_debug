@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../static/js/bootstrap.min.js"></script>
+
+
+<div class="list-group" id="api_main">
+	<a href="javascript:;" class="list-group-item apiGather" data="clientcustom">群聊频道</a>
+	<ul class="nav apiList none" name="群聊频道" style="display: none;">
+    <li><a href="applySecretChannel" data="applySecretChannel" name="clientcustom" target= "right" >申请频道</a></li>
+    <li><a href="fetchSecretChannel" data="fetchSecretChannel" name="clientcustom" target= "right" >查询频道</a></li>
+    <li><a href="joinSecretChannel" data="joinSecretChannel" name="clientcustom"  target= "right"  >加入频道</a></li>
+    <li><a href="quitSecretChannel" data="quitSecretChannel" name="clientcustom"  target= "right"  >退出频道</a></li>
+    <li><a href="secretChannelMessage" data="secretChannelMessage" name="clientcustom"  target= "right"  >管理消息</a></li>
+    <li><a href="veritySecretChannelMessage" data="veritySecretChannelMessage" name="clientcustom"  target= "right" >认证消息</a></li>
+    <li><a href="getSecretChannelInfo" data="getSecretChannelInfo" name="clientcustom"  target= "right"  >频道详情</a></li>
+    <li><a href="getUserJoinListSecretChannel" data="getUserJoinListSecretChannel" name="clientcustom"  target= "right"  >频道用户列表</a></li>
+	</ul>
+
+
+  <a href="javascript:;" class="list-group-item apiGather " data="oauth">授权OAUTH</a>
+  <ul class="nav apiList none" name="授权OAUTH" style="display: none;">
+    <li><a href="getScopeInfo" data="getScopeInfo" name="oauth" target= "right" >获取授权范围</a></li>
+    <li><a href="getTrustAuthCode" data="getTrustAuthCode" name="oauth" target= "right" >生成认证码</a></li>
+    <li><a href="getTrustAccessCode" data="getTrustAccessCode" name="oauth" target= "right" >获取授权码</a></li>
+    <li><a href="refreshTrustAccessToken" data="refreshTrustAccessToken" name="oauth" target= "right" >刷新授权码</a></li>
+
+  </ul>
+
+  <a href="javascript:;" class="list-group-item apiGather " data="accountapi">道客账户</a>
+  <ul class="nav apiList none" name="道客账户" style="display: none;">
+    <li><a href="addCustomAccount" data="addCustomAccount" name="accountapi" target= "right" >创建道客帐号</a></li>
+    <li><a href="checkIsBindIMEI" data="checkIsBindIMEI" name="accountapi" target= "right" >检测账户绑定IMEI</a></li>
+    <li><a href="checkIMEI" data="checkIMEI" name="accountapi"  target= "right"  >检测IMEI绑定账户</a></li>
+    <li><a href="userBindAccountMirrtalk" data="userBindAccountMirrtalk" name="accountapi"  target= "right"  >账户绑定IMEI</a></li>
+    <li><a href="disconnectAccount" data="disconnectAccount" name="accountapi"  target= "right"  >账户解绑IMEI</a></li>
+  </ul>
+
+  <a href="javascript:;" class="list-group-item apiGather " data="other">Other</a>
+  <ul class="nav apiList none" name="Other" style="display: none;">
+    <li><a href="addCustomAccount" data="addCustomAccount" name="other" target= "right" >other1</a></li>
+  </ul>
+
+</div>
+
+<script src="../static/jquery.js"></script>
+<script src="../static/docs.js"></script>
+
+  </body>
+</html>
+
+
