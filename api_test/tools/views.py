@@ -372,8 +372,8 @@ def api_function(dict):
 # 1代表用户名为主,2代表手机号码为主,3代表邮箱为主
 REGISTER_ACCOUNT_TYPE = (
 	('1','1--用户名'),
-	('2','1--手机号码'),
-	('3','1--邮箱'),
+	('2','2--手机号码'),
+	('3','3--邮箱'),
 )
 
 class classAddCustomAccount(forms.Form):
