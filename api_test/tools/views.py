@@ -27,7 +27,8 @@ appKey = "184269830"
 secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 
 # apiHost = "127.0.0.1"
-apiHost = "192.168.1.207"
+#apiHost = "192.168.1.207"
+apiHost = "192.168.184.129"
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -231,6 +232,8 @@ SECRET_CHECKSTATUS_TYPE = (
 
 
 
+
+
 class classApplySecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
@@ -376,6 +379,56 @@ REGISTER_ACCOUNT_TYPE = (
 	('3','3--邮箱'),
 )
 
+def api_function(dict):
+	if dict['loginType'] == "1":
+		del dict['QQ']
+		del dict['Email']
+		del dict['MSN']
+		del dict['weixin']
+		del dict['sinaweibo']
+	elif dict['loginType'] == "2":
+		del dict['QQ']
+		del dict['mobile']
+		del dict['MSN']
+		del dict['weixin']
+		del dict['sinaweibo']
+	elif dict['loginType'] == "3":
+		del dict['Email']
+		del dict['mobile']
+		del dict['MSN']
+		del dict['weixin']
+		del dict['sinaweibo']
+	elif dict['loginType'] == "4":
+		del dict['Email']
+		del dict['mobile']
+		del dict['QQ']
+		del dict['weixin']
+		del dict['sinaweibo']
+	elif dict['loginType'] == "5":
+		del dict['Email']
+		del dict['mobile']
+		del dict['QQ']
+		del dict['MSN']
+		del dict['sinaweibo']
+	elif dict['loginType'] == "6":
+		del dict['Email']
+		del dict['mobile']
+		del dict['QQ']
+		del dict['weixin']
+		del dict['MSN']
+
+#1手机号码登录；2用户邮箱登陆；3QQ登录；4MSN登录；5微信登陆；6新浪微博
+LOGIN_TYPE = (
+	('1','1--手机号码登录'),
+	('2','2--邮箱登陆'),
+	('3','3--QQ登录'),
+	('4','4--MSN登录'),
+	('5','5--微信登陆'),
+	('6','6--新浪微博'),
+)
+
+
+#创建道客帐户
 class classAddCustomAccount(forms.Form):
 	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -388,37 +441,287 @@ def addCustomAccount(req):
 	api_uri = "accountapi/v2/addCustomAccount"
 	return templateApp(req, classAddCustomAccount, api_uri , sys._getframe().f_code.co_name, )
 
+#IMEI预入库
+class classApiPrestroge(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-#是否绑定IMEI
-class classCheckIsBindIMEI(forms.Form):
+def apiPrestroge(req):
+	api_uri = "accountapi/v2/apiPrestroge"
+	return templateApp(req, classApiPrestroge, api_uri , sys._getframe().f_code.co_name)
+
+#绑定第三方账户与语镜账号
+class classAssociateAccountWithAccountID(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	loginType = forms.ChoiceField( choices = LOGIN_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
+	token = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	refreshToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessTokenExpiration = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def associateAccountWithAccountID(req):
+	api_uri = "accountapi/v2/associateAccountWithAccountID"
+	return templateApp(req, classAssociateAccountWithAccountID, api_uri , sys._getframe().f_code.co_name)
+
+#判断IMEI是否允许绑定
+class classCheckImei(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def checkImei(req):
+	api_uri = "accountapi/v2/checkImei"
+	return templateApp(req, classCheckImei, api_uri , sys._getframe().f_code.co_name)
+
+#检查用户是否绑定IMEI
+class classCheckIsBindImei(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def checkIsBindImei(req):
+	api_uri = "accountapi/v2/checkIsBindImei"
+	return templateApp(req, classCheckIsBindImei, api_uri , sys._getframe().f_code.co_name)
+
+#用户登陆
+class classCheckLogin(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	daokePassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def checkLogin(req):
+	api_uri = "accountapi/v2/checkLogin"
+	return templateApp(req, classCheckLogin, api_uri , sys._getframe().f_code.co_name)
+
+#判断是否允许注册
+class classCheckRegistration(forms.Form):
+	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def checkRegistration(req):
+	api_uri = "accountapi/v2/checkRegistration"
+	return templateApp(req, classCheckRegistration, api_uri , sys._getframe().f_code.co_name)
+
+#解绑imei
+class classDisconnectAccount(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 
-def checkIsBindIMEI(req):
-	api_uri = "accountapi/v2/checkIsBindImei"
-	return templateApp(req, classCheckIsBindIMEI, api_uri , sys._getframe().f_code.co_name)
+def disconnectAccount(req):
+	api_uri = "accountapi/v2/disconnectAccount"
+	return templateApp(req, classDisconnectAccount, api_uri , sys._getframe().f_code.co_name)
 
+#更新用户资料
+class classFixUserInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	nickname = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	userEmail = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	gender = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-class classCheckIMEI(forms.Form):
-	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "IMEI" ) 
-		
-def checkIMEI(req):
-	api_uri = "accountapi/v2/checkImei"
-	return templateApp(req, classCheckIMEI, api_uri , sys._getframe().f_code.co_name)
+def fixUserInfo(req):
+	api_uri = "accountapi/v2/fixUserInfo"
+	return templateApp(req, classFixUserInfo, api_uri , sys._getframe().f_code.co_name)
 
+#添加第三方帐户
+class classGenerateDaokeAccount(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	loginType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	nickname = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	token = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessTokenExpiration = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	refreshToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def generateDaokeAccount(req):
+	api_uri = "accountapi/v2/generateDaokeAccount"
+	return templateApp(req, classGenerateDaokeAccount, api_uri , sys._getframe().f_code.co_name)
+
+#通过第三方帐户得到账户编号
+class classGetAccountIDByAccount(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	loginType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getAccountIDByAccount(req):
+	api_uri = "accountapi/v2/getAccountIDByAccount"
+	return templateApp(req, classGetAccountIDByAccount, api_uri , sys._getframe().f_code.co_name)
+
+#通过手机号码得到帐户编号
+class classGetAccountIDFromMobile(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getAccountIDFromMobile(req):
+	api_uri = "accountapi/v2/getAccountIDFromMobile"
+	return templateApp(req, classGetAccountIDFromMobile, api_uri , sys._getframe().f_code.co_name)
+
+#获取用户自定义参数
+class classGetCustomArgs(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+
+def getCustomArgs(req):
+	api_uri = "accountapi/v2/getCustomArgs"
+	return templateApp(req, classGetCustomArgs, api_uri , sys._getframe().f_code.co_name)
+
+#得到IMEI和手机号
+class classGetImeiPhone(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getImeiPhone(req):
+	api_uri = "accountapi/v2/getImeiPhone"
+	return templateApp(req, classGetImeiPhone, api_uri , sys._getframe().f_code.co_name)
+
+#得到终端信息
+class classGetMirrtalkInfoByImei(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getMirrtalkInfoByImei(req):
+	api_uri = "accountapi/v2/getMirrtalkInfoByImei"
+	return templateApp(req, classGetMirrtalkInfoByImei, api_uri , sys._getframe().f_code.co_name)
+
+#得到手机验证码
+class classGetMobileVerificationCode(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getMobileVerificationCode(req):
+	api_uri = "accountapi/v2/getMobileVerificationCode"
+	return templateApp(req, classGetMobileVerificationCode, api_uri , sys._getframe().f_code.co_name)
+
+#得到用户自定义号码
+class classGetUserCustomNumber(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	numberType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserCustomNumber(req):
+	api_uri = "accountapi/v2/getUserCustomNumber"
+	return templateApp(req, classGetUserCustomNumber, api_uri , sys._getframe().f_code.co_name)
+
+#得到用户资料
+class classGetUserInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserInfo(req):
+	api_uri = "accountapi/v2/getUserInfo"
+	return templateApp(req, classGetUserInfo, api_uri , sys._getframe().f_code.co_name)
+
+#获取用户信息
+class classGetUserInformation(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserInformation(req):
+	api_uri = "accountapi/v2/getUserInformation"
+	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
+
+#判断帐户是否在线
+class classJudgeOnlineAccounJ(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+
+def judgeOnlineAccount(req):
+	api_uri = "accountapi/v2/judgeOnlineAccount"
+	return templateApp(req, classJudgeOnlineAccounJ, api_uri , sys._getframe().f_code.co_name)
+
+#判断给定手机号是否在线
+class classJudgeOnlineMobile(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def judgeOnlineMobile(req):
+	api_uri = "accountapi/v2/judgeOnlineMobile"
+	return templateApp(req, classJudgeOnlineMobile, api_uri , sys._getframe().f_code.co_name)
+
+#重置用户自定义号码
+class classResetUserCustomNumber(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	numberType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def resetUserCustomNumber(req):
+	api_uri = "accountapi/v2/resetUserCustomNumber"
+	return templateApp(req, classResetUserCustomNumber, api_uri , sys._getframe().f_code.co_name)
+
+#重置用户道客密码
+class classResetUserPassword(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+
+def resetUserPassword(req):
+	api_uri = "accountapi/v2/resetUserPassword"
+	return templateApp(req, classResetUserPassword, api_uri , sys._getframe().f_code.co_name)
+
+#发送验证URL到邮箱
+class classSendVerificationURL(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	userEmail = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	URL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def sendVerificationURL(req):
+	api_uri = "accountapi/v2/sendVerificationURL"
+	return templateApp(req, classSendVerificationURL, api_uri , sys._getframe().f_code.co_name)
+
+#设置用户自定义号码
+class classSetUserCustomNumber(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	call1Number = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	call2Number = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def setUserCustomNumber(req):
+	api_uri = "accountapi/v2/setUserCustomNumber"
+	return templateApp(req, classSetUserCustomNumber, api_uri , sys._getframe().f_code.co_name)
+
+#更改用户自定义参数
+class classUpdateCustomArgs(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	customArgs = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def updateCustomArgs(req):
+	api_uri = "accountapi/v2/updateCustomArgs"
+	return templateApp(req, classUpdateCustomArgs, api_uri , sys._getframe().f_code.co_name)
+
+#更改用户道客密码
+class classUpdateUserPassword(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	oldPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	newPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def updateUserPassword(req):
+	api_uri = "accountapi/v2/updateUserPassword"
+	return templateApp(req, classUpdateUserPassword, api_uri , sys._getframe().f_code.co_name)
+
+#绑定imei
 class classUserBindAccountMirrtalk(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) ) 
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def userBindAccountMirrtalk(req):
 	api_uri = "accountapi/v2/userBindAccountMirrtalk"
 	return templateApp(req, classUserBindAccountMirrtalk, api_uri , sys._getframe().f_code.co_name)
 
-class classDisconnectAccount(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+#验证手机或邮箱
+class classVerifyEmailOrMobile(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	email = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def disconnectAccount(req):
-	api_uri = "accountapi/v2/disconnectAccount"
-	return templateApp(req, classDisconnectAccount, api_uri , sys._getframe().f_code.co_name)
+def verifyEmailOrMobile(req):
+	api_uri = "accountapi/v2/verifyEmailOrMobile"
+	return templateApp(req, classVerifyEmailOrMobile, api_uri , sys._getframe().f_code.co_name)
+
+#车机设备号与道客imei关联
+class classAssociateDeviceIDWithImei(forms.Form):
+	deviceID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def associateDeviceIDWithImei(req):
+	api_uri = "accountapi/v2/associateDeviceIDWithImei"
+	return templateApp(req, classAssociateDeviceIDWithImei, api_uri , sys._getframe().f_code.co_name)
 
 #=====================================道客账户 end======================================================
 

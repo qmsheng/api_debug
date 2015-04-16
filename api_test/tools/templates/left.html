@@ -47,11 +47,45 @@
 
   <a href="javascript:;" class="list-group-item apiGather " data="accountapi">道客账户</a>
   <ul class="nav apiList none" name="道客账户" style="display: none;">
-    <li><a href="addCustomAccount" data="addCustomAccount" name="accountapi" target= "right" >创建道客帐号</a></li>
-    <li><a href="checkIsBindIMEI" data="checkIsBindIMEI" name="accountapi" target= "right" >检测账户绑定IMEI</a></li>
-    <li><a href="checkIMEI" data="checkIMEI" name="accountapi"  target= "right"  >检测IMEI绑定账户</a></li>
-    <li><a href="userBindAccountMirrtalk" data="userBindAccountMirrtalk" name="accountapi"  target= "right"  >账户绑定IMEI</a></li>
-    <li><a href="disconnectAccount" data="disconnectAccount" name="accountapi"  target= "right"  >账户解绑IMEI</a></li>
+    
+    <li><a href="addCustomAccount" data="addCustomAccount" name="clientcustom"  target= "right"  >创建道客账号</a></li>
+    <li><a href="apiPrestroge" data="apiPrestroge" name="clientcustom"  target= "right"  >IMEI预入库</a></li>
+    <li><a href="associateAccountWithAccountID" data="associateAccountWithAccountID" name="clientcustom"  target= "right"  >第三方账户与语镜帐号关联</a></li>
+    <li><a href="checkImei" data="checkImei" name="clientcustom"  target= "right"  >判断imei是否允许用户绑定</a></li>
+    <li><a href="checkIsBindImei" data="checkIsBindImei" name="clientcustom"  target= "right"  >检查用户是否绑定IMEI</a></li>
+    <li><a href="checkLogin" data="checkLogin" name="clientcustom"  target= "right"  >用户登陆</a></li>
+    <li><a href="checkRegistration" data="checkRegistration" name="clientcustom"  target= "right"  >判断是否允许注册</a></li>
+    <li><a href="disconnectAccount" data="disconnectAccount" name="clientcustom"  target= "right"  >解绑帐户</a></li>
+    <li><a href="fixUserInfo" data="fixUserInfo" name="clientcustom"  target= "right"  >更新用户资料</a></li>
+    <li><a href="generateDaokeAccount" data="generateDaokeAccount" name="clientcustom"  target= "right"  >添加第三方帐户</a></li>
+    <li><a href="getAccountIDByAccount" data="getAccountIDByAccount" name="clientcustom"  target= "right"  >通过第三方帐户得到账户编号</a></li>
+    <li><a href="getAccountIDFromMobile" data="getAccountIDFromMobile" name="clientcustom"  target= "right"  >通过手机号码得到帐户编号</a></li>
+    <li><a href="getCustomArgs" data="getCustomArgs" name="clientcustom"  target= "right"  >获取用户自定义参数</a></li>
+    <li><a href="getImeiPhone" data="getImeiPhone" name="clientcustom"  target= "right"  >得到IMEI和手机号</a></li>
+    <li><a href="getMirrtalkInfoByImei" data="getMirrtalkInfoByImei" name="clientcustom"  target= "right"  >得到终端信息</a></li>
+    <li><a href="getMobileVerificationCode" data="getMobileVerificationCode" name="clientcustom"  target= "right"  >得到手机验证码</a></li>
+    <li><a href="getUserCustomNumber" data="getUserCustomNumber" name="clientcustom"  target= "right"  >得到用户自定义号码</a></li>
+    <li><a href="getUserInfo" data="getUserInfo" name="clientcustom"  target= "right"  >得到用户资料</a></li>
+    <li><a href="getUserInformation" data="getUserInformation" name="clientcustom"  target= "right"  >获取用户信息</a></li>
+    <li><a href="judgeOnlineAccount" data="judgeOnlineAccount" name="clientcustom"  target= "right"  >判断帐户是否在线</a></li>
+    <li><a href="judgeOnlineMobile" data="judgeOnlineMobile" name="clientcustom"  target= "right"  >判断给定手机号是否在线</a></li>
+    <li><a href="resetUserCustomNumber" data="resetUserCustomNumber" name="clientcustom"  target= "right"  >重置用户自定义号码</a></li>
+    <li><a href="resetUserPassword" data="resetUserPassword" name="clientcustom"  target= "right"  >重置用户道客密码</a></li>
+    <li><a href="sendVerificationURL" data="sendVerificationURL" name="clientcustom"  target= "right"  >发送验证URL到邮箱</a></li>
+    <li><a href="setUserCustomNumber" data="setUserCustomNumber" name="clientcustom"  target= "right"  >设置用户自定义号码</a></li>
+    <li><a href="updateCustomArgs" data="updateCustomArgs" name="clientcustom"  target= "right"  >更改用户自定义参数</a></li>
+    <li><a href="updateUserPassword" data="updateUserPassword" name="clientcustom"  target= "right"  >更改用户道客密码</a></li>
+    <li><a href="userBindAccountMirrtalk" data="userBindAccountMirrtalk" name="clientcustom"  target= "right"  >绑定终端</a></li>
+    <li><a href="verifyEmailOrMobile" data="verifyEmailOrMobile" name="clientcustom"  target= "right"  >验证手机或邮箱</a></li>
+    <li><a href="associateDeviceIDWithImei" data="associateDeviceIDWithImei" name="clientcustom"  target= "right"  >车机设备号与道客imei关联</a></li>
+
+
+
+
+
+
+
+
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="other">Other</a>

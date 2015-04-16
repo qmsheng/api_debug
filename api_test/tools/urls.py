@@ -40,11 +40,38 @@ urlpatterns = patterns (
 
 			
 			#--------------道客账户 begin-------------------------
+		
 			url(r'^addCustomAccount$',addCustomAccount),
-			url(r'^checkIsBindIMEI$',checkIsBindIMEI),
-			url(r'^checkIMEI$',checkIMEI),
-			url(r'^userBindAccountMirrtalk$',userBindAccountMirrtalk),
+			url(r'^apiPrestroge$',apiPrestroge),
+			url(r'^associateAccountWithAccountID$',associateAccountWithAccountID),
+			url(r'^checkImei$',checkImei),
+			url(r'^checkIsBindImei$',checkIsBindImei),
+			url(r'^checkLogin$',checkLogin),
+			url(r'^checkRegistration$',checkRegistration),
 			url(r'^disconnectAccount$',disconnectAccount),
+			url(r'^fixUserInfo$',fixUserInfo),
+			url(r'^generateDaokeAccount$',generateDaokeAccount),
+			url(r'^getAccountIDByAccount$',getAccountIDByAccount),
+			url(r'^getAccountIDFromMobile$',getAccountIDFromMobile),
+			url(r'^getCustomArgs$',getCustomArgs),
+			url(r'^getImeiPhone$',getImeiPhone),
+			url(r'^getMirrtalkInfoByImei$',getMirrtalkInfoByImei),
+			url(r'^getMobileVerificationCode$',getMobileVerificationCode),
+			url(r'^getUserCustomNumber$',getUserCustomNumber),
+			url(r'^getUserInfo$',getUserInfo),
+			url(r'^getUserInformation$',getUserInformation),
+			url(r'^judgeOnlineAccount$',judgeOnlineAccount),
+			url(r'^judgeOnlineMobile$',judgeOnlineMobile),
+			url(r'^resetUserCustomNumber$',resetUserCustomNumber),
+			url(r'^resetUserPassword$',resetUserPassword),
+			url(r'^sendVerificationURL$',sendVerificationURL),
+			url(r'^setUserCustomNumber$',setUserCustomNumber),
+			url(r'^updateCustomArgs$',updateCustomArgs),
+			url(r'^updateUserPassword$',updateUserPassword),
+			url(r'^userBindAccountMirrtalk$',userBindAccountMirrtalk),
+			url(r'^verifyEmailOrMobile$',verifyEmailOrMobile),
+			url(r'^associateDeviceIDWithImei$',associateDeviceIDWithImei),
+
 			#--------------道客账户 end-------------------------
 
 			#--------------daoke oauth---------------
