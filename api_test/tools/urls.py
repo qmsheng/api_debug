@@ -75,10 +75,39 @@ urlpatterns = patterns (
 			#--------------道客账户 end-------------------------
 
 			#--------------daoke oauth---------------
-			url(r'^getScopeInfo$',getScopeInfo),
+			# url(r'^getScopeInfo$',getScopeInfo),
+			# url(r'^getTrustAuthCode$',getTrustAuthCode),
+			# url(r'^getTrustAccessCode$',getTrustAccessCode),
+			# url(r'^refreshTrustAccessToken$',refreshTrustAccessToken),
+			#developer
+			url(r'^registerIdentityInfo$',registerIdentityInfo),
+			url(r'^developerIdAdd$',developerIdAdd),
+			url(r'^manageDeveloperStatus$',manageDeveloperStatus),
+			url(r'^getDeveloperInfo$',getDeveloperInfo),
+			url(r'^updateIdentityInfo$',updateIdentityInfo),
+			url(r'^manageDeveloperInfo$',manageDeveloperInfo),
+
+			#developer's app
+			url(r'^getAppKeyInfo$',getAppKeyInfo),
+			url(r'^createNewApp$',createNewApp),
+			url(r'^getDeveloperAppInfo$',getDeveloperAppInfo),
+			url(r'^applyRaiseAppLevel$',applyRaiseAppLevel),
+			url(r'^manageAppLevelChangeInfo$',manageAppLevelChangeInfo),
+			url(r'^manageAppChangeLevel$',manageAppChangeLevel),
+			url(r'^setAppFreqInfo$',setAppFreqInfo),
+
+			#authrization
+			url(r'^getAuthCode$',getAuthCode),
+			url(r'^getAccessToken$',getAccessToken),
+			url(r'^refreshAccessToken$',refreshAccessToken),
+			url(r'^getImplicitToken$',getImplicitToken),
+			url(r'^getPasswordToken$',getPasswordToken),
+
+			#oauth for KLD
 			url(r'^getTrustAuthCode$',getTrustAuthCode),
 			url(r'^getTrustAccessCode$',getTrustAccessCode),
 			url(r'^refreshTrustAccessToken$',refreshTrustAccessToken),
+
 			#--------------daoke oauth---------------
 
 
