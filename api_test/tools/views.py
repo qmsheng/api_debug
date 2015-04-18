@@ -27,8 +27,9 @@ appKey = "184269830"
 secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 
 # apiHost = "127.0.0.1"
-apiHost = "192.168.1.207"
+# apiHost = "192.168.1.207"
 # apiHost = "192.168.184.129"
+apiHost = "192.168.11.104"
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -337,23 +338,6 @@ class classQuitSecretChannel(forms.Form):
 def quitSecretChannel(req):
 	api_uri = "clientcustom/v2/quitSecretChannel"
 	return templateApp(req, classQuitSecretChannel, api_uri , sys._getframe().f_code.co_name)
-
-
-
-class classCreateNewApp(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-def createNewApp(req):
-	api_uri = "oauth/v2/createNewApp"
-	return templateApp(req, classCreateNewApp, api_uri , sys._getframe().f_code.co_name)
-
-
-
-
-
-
 
 
 
@@ -799,52 +783,6 @@ def associateDeviceIDWithImei(req):
 
 #=====================================oauth begin======================================================
 
-# class classTestOauth(forms.Form):
-# 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-# 	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-# 	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-
-# def testOauth(req):
-# 	api_uri = "authorize"
-# 	api_host = "127.0.0.1"
-# 	api_port = "10000"
-# 	return templateApp(req, classTestOauth, api_uri , sys._getframe().f_code.co_name, api_host, api_port  )
-
-# class classGetScopeInfo(forms.Form):
-# 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
-# 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"40" } ))
-
-# def getScopeInfo(req):
-# 	api_uri = "oauth/v2/getScopeInfo"
-# 	return templateApp(req, classGetScopeInfo, api_uri , sys._getframe().f_code.co_name   )
-
-
-# class classGetTrustAuthCode(forms.Form):
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-# 	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-
-# def getTrustAuthCode(req):
-# 	api_uri = "oauth/v2/getTrustAuthCode"
-# 	return templateApp(req, classGetTrustAuthCode, api_uri , sys._getframe().f_code.co_name   )
-
-
-# class classGetTrustAccessCode(forms.Form):
-# 	code = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-# 	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"authorizationCode"})  ) 
-
-
-# def getTrustAccessCode(req):
-# 	api_uri = "oauth/v2/getTrustAccessCode"
-# 	return templateApp(req, classGetTrustAccessCode, api_uri , sys._getframe().f_code.co_name )
-
-# class classRefreshTrustAccessToken(forms.Form):
-# 	refreshToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
-# 	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"refreshToken"})  ) 
-
-# def refreshTrustAccessToken(req):
-# 	api_uri = "oauth/v2/refreshTrustAccessToken"
-# 	return templateApp(req, classRefreshTrustAccessToken, api_uri , sys._getframe().f_code.co_name )
-
 #开发者相关API
 class classRegisterIdentityInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
@@ -1035,6 +973,8 @@ def getTrustAuthCode(req):
 class classGetTrustAccessCode(forms.Form):
 	code = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getTrustAccessCode(req):
 	api_uri = "oauth/v2/getTrustAccessCode"
