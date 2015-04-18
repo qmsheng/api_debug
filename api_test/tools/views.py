@@ -361,7 +361,7 @@ def createNewApp(req):
 
 #=====================================道客账户 begin======================================================
 
-def api_function(dict):
+def add_custom_before_sign(dict):
 	if dict['accountType'] == "1":
 		del dict['mobile']
 		del dict['userEmail']
@@ -496,7 +496,7 @@ class classAddCustomAccount(forms.Form):
 
 def addCustomAccount(req):
 	api_uri = "accountapi/v2/addCustomAccount"
-	return templateApp(req, classAddCustomAccount, api_uri , sys._getframe().f_code.co_name, )
+	return templateApp(req, classAddCustomAccount, api_uri , sys._getframe().f_code.co_name, before_sign = add_custom_before_sign)
 
 #IMEI预入库
 class classApiPrestroge(forms.Form):
@@ -797,11 +797,6 @@ def associateDeviceIDWithImei(req):
 
 
 
-
-
-
-
-
 #=====================================oauth begin======================================================
 
 # class classTestOauth(forms.Form):
@@ -1063,5 +1058,15 @@ def getUserInformation(req):
 	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
 #=====================================oauth end======================================================
 
+#=====================================reward begin======================================================
 
+class classAddDepositInfo(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
+	depositPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"123456"})  ) 
+
+def addDepositInfo(req):
+	api_uri = "rewardapi/v2/addDepositInfo"
+	return templateApp(req, classAddDepositInfo, api_uri , sys._getframe().f_code.co_name )
+
+#=====================================reward end======================================================
 

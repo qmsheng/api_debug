@@ -111,4 +111,9 @@ urlpatterns = patterns (
 			#--------------daoke oauth---------------
 
 
+			#------------reward api begin-----------------------
+			url(r'^addDepositInfo$',addDepositInfo),
+			#------------reward api end-----------------------
+
+
 	)
