@@ -251,6 +251,46 @@ def applySecretChannel(req):
 	return templateApp(req, classApplySecretChannel, api_uri , sys._getframe().f_code.co_name)
 
 
+class classModifySecretChannelInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelOpenType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelIntro = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	channelCatalogID = forms.ChoiceField( choices = CATALOG_SECRET_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelLogoUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelCitycode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+
+def modifySecretChannelInfo(req):
+	api_uri = "clientcustom/v2/modifySecretChannelInfo"
+	return templateApp(req, classModifySecretChannelInfo, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+class classManageSecretChannel(forms.Form):
+	adminAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"2"})  )
+	userAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	curStatus = forms.ChoiceField( choices = SECRET_USER_STATUS,  widget=forms.Select(attrs={'class':'form-control'} ) )
+def manageSecretChannel(req):
+	api_uri = "clientcustom/v2/manageSecretChannelUsers"
+	return templateApp(req, classManageSecretChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+class classSetCustomInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	actionType = forms.ChoiceField( choices = SECRET_USERKEY,  widget=forms.Select(attrs={'class':'form-control'} ) )
+	customType = forms.ChoiceField( choices = SECRET_CUSTOMTYPE, widget=forms.Select(attrs={'class':'form-control' })  ) 
+	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
+def setCustomInfo(req):
+	api_uri = "clientcustom/v2/setCustomInfo"
+	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
 
 class classFetchSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
