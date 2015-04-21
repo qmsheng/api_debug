@@ -831,6 +831,13 @@ def associateDeviceIDWithImei(req):
 	api_uri = "accountapi/v2/associateDeviceIDWithImei"
 	return templateApp(req, classAssociateDeviceIDWithImei, api_uri , sys._getframe().f_code.co_name)
 
+class classGetUserInformation(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label= "accountID" )
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserInformation(req):
+	api_uri = "accountapi/v2/getUserInformation"
+	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
 #=====================================道客账户 end======================================================
 
 
