@@ -35,12 +35,6 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 # apiHost = "127.0.0.1"
 apiHost = "192.168.1.207"
 # apiHost = "192.168.184.129"
-<<<<<<< HEAD
-apiHost = "192.168.11.104"
-# apiHost = "115.231.73.17"
-=======
-# apiHost = "192.168.11.104"
->>>>>>> 9d1a6a36518e9914bfb12c4e500d7f83be2274b4
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -844,7 +838,6 @@ def associateDeviceIDWithImei(req):
 
 
 #=====================================oauth begin======================================================
-
 #开发者相关API
 #第三方开发者注册身份信息
 class classRegisterIdentityInfo(forms.Form):
@@ -1078,22 +1071,6 @@ class classRefreshTrustAccessToken(forms.Form):
 def refreshTrustAccessToken(req):
 	api_uri = "oauth/v2/refreshTrustAccessToken"
 	return templateApp(req, classRefreshTrustAccessToken, api_uri , sys._getframe().f_code.co_name)
-
-<<<<<<< HEAD
-=======
-
-class classGetUserInformation(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-def getUserInformation(req):
-	api_uri = "accountapi/v2/getUserInformation"
-	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
-
-
-
-
->>>>>>> 9d1a6a36518e9914bfb12c4e500d7f83be2274b4
 #=====================================oauth end======================================================
 
 #=====================================reward begin======================================================
