@@ -230,6 +230,30 @@ SECRET_CHECKSTATUS_TYPE = (
 	('1','1--通过'),
 	('2','2--拒绝'),
 )
+#---- 获取用户状态
+SECRET_USER_STATUS = (
+	('1','1--正常'),
+	('2','2--禁言'),
+	('3','3--拉黑')
+
+)
+#---- 设置关联键
+SECRET_USERKEY = (
+	('4','4--+键'),
+	('5','5--++键')
+
+)
+#---- 按键类型
+SECRET_CUSTOMTYPE = (
+	('2','2--customType:2(actionType:5)'),
+	('6','6--customType:6(actionType:4)')
+)
+
+#得到在线列表
+FETCH_SECRET_ONLINE_INFO = (
+	('1','1--管理员得到在线列表'),
+	('2','2--普通得到在线列表')
+)
 
 
 
