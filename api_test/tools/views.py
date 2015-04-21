@@ -293,7 +293,7 @@ def modifySecretChannelInfo(req):
 
 
 class classManageSecretChannel(forms.Form):
-	adminAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"2"})  )
 	userAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
