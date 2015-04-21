@@ -410,38 +410,51 @@ def api_function(dict):
 		del dict['MSN']
 		del dict['weixin']
 		del dict['sinaweibo']
+		del dict['KLD']
 	elif dict['loginType'] == "2":
 		del dict['QQ']
 		del dict['mobile']
 		del dict['MSN']
 		del dict['weixin']
 		del dict['sinaweibo']
+		del dict['KLD']
 	elif dict['loginType'] == "3":
 		del dict['Email']
 		del dict['mobile']
 		del dict['MSN']
 		del dict['weixin']
 		del dict['sinaweibo']
+		del dict['KLD']
 	elif dict['loginType'] == "4":
 		del dict['Email']
 		del dict['mobile']
 		del dict['QQ']
 		del dict['weixin']
 		del dict['sinaweibo']
+		del dict['KLD']
 	elif dict['loginType'] == "5":
 		del dict['Email']
 		del dict['mobile']
 		del dict['QQ']
 		del dict['MSN']
 		del dict['sinaweibo']
+		del dict['KLD']
 	elif dict['loginType'] == "6":
 		del dict['Email']
 		del dict['mobile']
 		del dict['QQ']
 		del dict['weixin']
 		del dict['MSN']
+		del dict['KLD']
+	elif dict['loginType'] == "7":
+		del dict['Email']
+		del dict['mobile']
+		del dict['QQ']
+		del dict['weixin']
+		del dict['sinaweibo']
+		del dict['MSN']
 
-#1手机号码登录；2用户邮箱登陆；3QQ登录；4MSN登录；5微信登陆；6新浪微博
+#1手机号码登录；2用户邮箱登陆；3QQ登录；4MSN登录；5微信登陆；6新浪微博;7第三方信任账户
 LOGIN_TYPE = (
 	('1','1--手机号码登录'),
 	('2','2--邮箱登陆'),
@@ -449,6 +462,7 @@ LOGIN_TYPE = (
 	('4','4--MSN登录'),
 	('5','5--微信登陆'),
 	('6','6--新浪微博'),
+	('7','7--第三方信任账户'),
 )
 
 
@@ -532,13 +546,10 @@ def apiPrestroge(req):
 
 #绑定第三方账户与语镜账号
 class classAssociateAccountWithAccountID(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	#accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	loginType = forms.ChoiceField( choices = LOGIN_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
-	token = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	refreshToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	accessTokenExpiration = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def associateAccountWithAccountID(req):
 	api_uri = "accountapi/v2/associateAccountWithAccountID"
@@ -546,7 +557,6 @@ def associateAccountWithAccountID(req):
 
 #判断IMEI是否允许绑定
 class classCheckImei(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def checkImei(req):
@@ -564,7 +574,7 @@ def checkIsBindImei(req):
 
 #用户登陆
 class classCheckLogin(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	# accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	daokePassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"127.0.0.1" } )) 
@@ -603,14 +613,9 @@ def fixUserInfo(req):
 
 #添加第三方帐户
 class classGenerateDaokeAccount(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	loginType = forms.ChoiceField( choices = LOGIN_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
 	nickname = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	# token = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	# accessTokenExpiration = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	# refreshToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def generateDaokeAccount(req):
 	api_uri = "accountapi/v2/generateDaokeAccount"
@@ -618,8 +623,6 @@ def generateDaokeAccount(req):
 
 #通过第三方帐户得到账户编号
 class classGetAccountIDByAccount(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	account = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	loginType = forms.ChoiceField( choices = LOGIN_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
 	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"127.0.0.1" } ))
@@ -630,8 +633,6 @@ def getAccountIDByAccount(req):
 
 #通过手机号码得到帐户编号
 class classGetAccountIDFromMobile(forms.Form):
-	# accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	# accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getAccountIDFromMobile(req):
@@ -666,8 +667,6 @@ def getMirrtalkInfoByImei(req):
 
 #得到手机验证码
 class classGetMobileVerificationCode(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
@@ -679,7 +678,7 @@ def getMobileVerificationCode(req):
 class classGetUserCustomNumber(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	numberType = forms.ChoiceField( choices = LOGIN_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
+	numberType = forms.ChoiceField( choices = NUMBER_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
 
 def getUserCustomNumber(req):
 	api_uri = "accountapi/v2/getUserCustomNumber"
@@ -687,8 +686,6 @@ def getUserCustomNumber(req):
 
 #得到用户资料
 class classGetUserInfo(forms.Form):
-	# accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	# accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getUserInfo(req):
@@ -742,8 +739,6 @@ def resetUserPassword(req):
 
 #发送验证URL到邮箱
 class classSendVerificationURL(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	userEmail = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	URL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' ,'value':"https://github.com/jayzh1010"} ))
 	content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' ,'value':"hellonihao" } ))
