@@ -23,13 +23,24 @@ import string
 # from django.views.decorators.csrf import csrf_exempt
 # from django.views.decorators.csrf import requires_csrf_token
 
-appKey = "184269830"
-secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
+# 点6
+appKey = "2064302565"
+secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
+
+#沙箱
+# accountID = "SsYYnzgsdw"
+# appKey = "1111111111"
+# secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
 
 # apiHost = "127.0.0.1"
 apiHost = "192.168.1.207"
 # apiHost = "192.168.184.129"
+<<<<<<< HEAD
+apiHost = "192.168.11.104"
+# apiHost = "115.231.73.17"
+=======
 # apiHost = "192.168.11.104"
+>>>>>>> 9d1a6a36518e9914bfb12c4e500d7f83be2274b4
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -835,6 +846,7 @@ def associateDeviceIDWithImei(req):
 #=====================================oauth begin======================================================
 
 #开发者相关API
+#第三方开发者注册身份信息
 class classRegisterIdentityInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
 	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -848,24 +860,29 @@ class classRegisterIdentityInfo(forms.Form):
 	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	emergencyContactName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	emergencyContactPhone = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	IDCardPictureURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	businessLicensePictureURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	taxRegistrationPictureURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	organizationCodePictureURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def registerIdentityInfo(req):
 	api_uri = "oauth/v2/registerIdentityInfo"
 	return templateApp(req, classRegisterIdentityInfo, api_uri , sys._getframe().f_code.co_name)
 
-class classDeveloperIdAdd(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	IDCardPicture = forms.ImageField()  
-	businessLicensePicture = forms.ImageField()  
-	taxRegistrationPicture = forms.ImageField()  
-	organizationCodePicture = forms.ImageField()
+#合并到registerIdentityInfo
+# class classDeveloperIdAdd(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+# 	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	IDCardPicture = forms.ImageField()  
+# 	businessLicensePicture = forms.ImageField()  
+# 	taxRegistrationPicture = forms.ImageField()  
+# 	organizationCodePicture = forms.ImageField()
 
+# def developerIdAdd(req):
+# 	api_uri = "oauth/v2/developerIdAdd"
+# 	return templateApp(req, classDeveloperIdAdd, api_uri , sys._getframe().f_code.co_name)
 
-def developerIdAdd(req):
-	api_uri = "oauth/v2/developerIdAdd"
-	return templateApp(req, classDeveloperIdAdd, api_uri , sys._getframe().f_code.co_name)
-
+#管理后台审核开发者状态
 class classManageDeveloperStatus(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
 	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -875,6 +892,7 @@ def manageDeveloperStatus(req):
 	api_uri = "oauth/v2/manageDeveloperStatus"
 	return templateApp(req, classManageDeveloperStatus, api_uri , sys._getframe().f_code.co_name)
 
+#获取开发者资料
 class classGetDeveloperInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
 
@@ -882,22 +900,37 @@ def getDeveloperInfo(req):
 	api_uri = "oauth/v2/getDeveloperInfo"
 	return templateApp(req, classGetDeveloperInfo, api_uri , sys._getframe().f_code.co_name)
 
-#para check
+#更新开发者资料
 class classUpdateIdentityInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	province = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	city = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	address = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	postcode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	email = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	phone = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	emergencyContactName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	emergencyContactPhone = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def updateIdentityInfo(req):
 	api_uri = "oauth/v2/updateIdentityInfo"
 	return templateApp(req, classUpdateIdentityInfo, api_uri , sys._getframe().f_code.co_name)
 
+#管理后台获取开发者信息
 class classManageDeveloperInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def manageDeveloperInfo(req):
 	api_uri = "oauth/v2/manageDeveloperInfo"
 	return templateApp(req, classManageDeveloperInfo, api_uri , sys._getframe().f_code.co_name)
 
 #第三方开发者应用管理
+#获取appKey信息
 class classGetAppKeyInfo(forms.Form):
 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
@@ -905,51 +938,58 @@ def getAppKeyInfo(req):
 	api_uri = "oauth/v2/getAppKeyInfo"
 	return templateApp(req, classGetAppKeyInfo, api_uri , sys._getframe().f_code.co_name)
 
+#生成新应用
 class classCreateNewApp(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	appLogo = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def createNewApp(req):
 	api_uri = "oauth/v2/createNewApp"
 	return templateApp(req, classCreateNewApp, api_uri , sys._getframe().f_code.co_name)
 
+#获取开发者的应用信息，输入参数为appKey,sign,accountID,validity
 class classGetDeveloperAppInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	validity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getDeveloperAppInfo(req):
 	api_uri = "oauth/v2/getDeveloperAppInfo"
 	return templateApp(req, classGetDeveloperAppInfo, api_uri , sys._getframe().f_code.co_name)
 
-class classApplyRaiseAppLevel(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+#开发者申请提升应用等级appKey,sign,accountID,clientAppKey,appliedLevel
+# class classApplyRaiseAppLevel(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+# 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	appliedLevel = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def applyRaiseAppLevel(req):
-	api_uri = "oauth/v2/applyRaiseAppLevel"
-	return templateApp(req, classApplyRaiseAppLevel, api_uri , sys._getframe().f_code.co_name)
+# def applyRaiseAppLevel(req):
+# 	api_uri = "oauth/v2/applyRaiseAppLevel"
+# 	return templateApp(req, classApplyRaiseAppLevel, api_uri , sys._getframe().f_code.co_name)
 
-class classManageAppLevelChangeInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# #管理后台获取所有应用等级变更信息appKey,sign,status,startPage,pageCount,startTime,endTime.
+# class classManageAppLevelChangeInfo(forms.Form):
+# 	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def manageAppLevelChangeInfo(req):
-	api_uri = "oauth/v2/manageAppLevelChangeInfo"
-	return templateApp(req, classManageAppLevelChangeInfo, api_uri , sys._getframe().f_code.co_name)
+# def manageAppLevelChangeInfo(req):
+# 	api_uri = "oauth/v2/manageAppLevelChangeInfo"
+# 	return templateApp(req, classManageAppLevelChangeInfo, api_uri , sys._getframe().f_code.co_name)
 
-class classManageAppChangeLevel(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# #管理后台更改应用等级appKey,sign,clientAppKey,level
+# class classManageAppChangeLevel(forms.Form):
+# 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	level = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def manageAppChangeLevel(req):
-	api_uri = "oauth/v2/manageAppChangeLevel"
-	return templateApp(req, classManageAppChangeLevel, api_uri , sys._getframe().f_code.co_name)
+# def manageAppChangeLevel(req):
+# 	api_uri = "oauth/v2/manageAppChangeLevel"
+# 	return templateApp(req, classManageAppChangeLevel, api_uri , sys._getframe().f_code.co_name)
 
+#OAUTH授权频次控制
 class classSetAppFreqInfo(forms.Form):
 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	apiName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -962,33 +1002,33 @@ def setAppFreqInfo(req):
 	return templateApp(req, classSetAppFreqInfo, api_uri , sys._getframe().f_code.co_name)	
 
 #授权认证
-class classGetAuthCode(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# class classGetAuthCode(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+# 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def getAuthCode(req):
-	api_uri = "oauth/v2/getAuthCode"
-	return templateApp(req, classGetAuthCode, api_uri , sys._getframe().f_code.co_name)
+# def getAuthCode(req):
+# 	api_uri = "oauth/v2/getAuthCode"
+# 	return templateApp(req, classGetAuthCode, api_uri , sys._getframe().f_code.co_name)
 
-class classGetAccessToken(forms.Form):
-	code = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# class classGetAccessToken(forms.Form):
+# 	code = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+# 	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def getAccessToken(req):
-	api_uri = "oauth/v2/getAccessToken"
-	return templateApp(req, classGetAccessToken, api_uri , sys._getframe().f_code.co_name)
+# def getAccessToken(req):
+# 	api_uri = "oauth/v2/getAccessToken"
+# 	return templateApp(req, classGetAccessToken, api_uri , sys._getframe().f_code.co_name)
 
-class classRefreshAccessToken(forms.Form):
-	refreshToken =  forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# class classRefreshAccessToken(forms.Form):
+# 	refreshToken =  forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	redirectURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def refreshAccessToken(req):
-	api_uri = "oauth/v2/refreshAccessToken"
-	return templateApp(req, classRefreshAccessToken, api_uri , sys._getframe().f_code.co_name)
+# def refreshAccessToken(req):
+# 	api_uri = "oauth/v2/refreshAccessToken"
+# 	return templateApp(req, classRefreshAccessToken, api_uri , sys._getframe().f_code.co_name)
 
 class classGetPasswordToken(forms.Form):
 	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -1039,6 +1079,8 @@ def refreshTrustAccessToken(req):
 	api_uri = "oauth/v2/refreshTrustAccessToken"
 	return templateApp(req, classRefreshTrustAccessToken, api_uri , sys._getframe().f_code.co_name)
 
+<<<<<<< HEAD
+=======
 
 class classGetUserInformation(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
@@ -1051,6 +1093,7 @@ def getUserInformation(req):
 
 
 
+>>>>>>> 9d1a6a36518e9914bfb12c4e500d7f83be2274b4
 #=====================================oauth end======================================================
 
 #=====================================reward begin======================================================
