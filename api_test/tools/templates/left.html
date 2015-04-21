@@ -22,7 +22,15 @@
     <script src="../static/js/bootstrap.min.js"></script>
 
 
+
+
 <div class="list-group" id="api_main">
+
+    <a href="javascript:;" class="list-group-item apiGather " data="WEMESetting">WEME设置相关</a>
+    <ul class="nav apiList none" name="WEME设置相关" style="display: none;">
+        <li><a href="checkIsOnline" data="checkIsOnline" name="WEMESetting" target= "right" >判断用户是否在线</a></li>
+    </ul>
+
 	<a href="javascript:;" class="list-group-item apiGather" data="clientcustom">群聊频道</a>
 	<ul class="nav apiList none" name="群聊频道" style="display: none;">
     <li><a href="applySecretChannel" data="applySecretChannel" name="clientcustom" target= "right" >申请频道</a></li>
@@ -117,6 +125,7 @@
   <ul class="nav apiList none" name="众酬API" style="display: none;">
    <li><a href="addDepositInfo" data="addDepositInfo" name="rewardapi" target= "right" >初始化押金</a></li>
   </ul>
+
 
   <a href="javascript:;" class="list-group-item apiGather " data="other">Other</a>
   <ul class="nav apiList none" name="Other" style="display: none;">

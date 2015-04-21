@@ -75,6 +75,7 @@ urlpatterns = patterns (
 			url(r'^userBindAccountMirrtalk$',userBindAccountMirrtalk),
 			url(r'^verifyEmailOrMobile$',verifyEmailOrMobile),
 			url(r'^associateDeviceIDWithImei$',associateDeviceIDWithImei),
+	
 
 			#--------------道客账户 end-------------------------
 
@@ -114,6 +115,9 @@ urlpatterns = patterns (
 
 			#--------------daoke oauth---------------
 
+			#-------------WEME setting begin---------
+			url(r'^checkIsOnline$',checkIsOnline),
+			#-------------WEME setting end-----------
 
 			#------------reward api begin-----------------------
 			url(r'^addDepositInfo$',addDepositInfo),

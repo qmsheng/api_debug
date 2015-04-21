@@ -27,9 +27,9 @@ appKey = "184269830"
 secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 
 # apiHost = "127.0.0.1"
-# apiHost = "192.168.1.207"
+apiHost = "192.168.1.207"
 # apiHost = "192.168.184.129"
-apiHost = "192.168.11.104"
+# apiHost = "192.168.11.104"
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -692,14 +692,6 @@ def getUserInfo(req):
 	api_uri = "accountapi/v2/getUserInfo"
 	return templateApp(req, classGetUserInfo, api_uri , sys._getframe().f_code.co_name)
 
-#获取用户信息
-class classGetUserInformation(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-def getUserInformation(req):
-	api_uri = "accountapi/v2/getUserInformation"
-	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
 
 #判断帐户是否在线
 class classJudgeOnlineAccounJ(forms.Form):
@@ -1031,6 +1023,10 @@ class classGetUserInformation(forms.Form):
 def getUserInformation(req):
 	api_uri = "accountapi/v2/getUserInformation"
 	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
 #=====================================oauth end======================================================
 
 #=====================================reward begin======================================================
@@ -1045,3 +1041,13 @@ def addDepositInfo(req):
 
 #=====================================reward end======================================================
 
+
+#====================================weme setting begin================================
+# 判断用户是否在线
+class classCheckIsOnline(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+
+def checkIsOnline(req):
+	api_uri = "clientcustom/v3/checkIsOnline"
+	return templateApp(req, classCheckIsOnline, api_uri , sys._getframe().f_code.co_name)
+#====================================weme setting end
