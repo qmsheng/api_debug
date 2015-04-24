@@ -100,7 +100,8 @@ urlpatterns = patterns (
 			# url(r'^manageAppLevelChangeInfo$',manageAppLevelChangeInfo),
 			# url(r'^manageAppChangeLevel$',manageAppChangeLevel),
 			url(r'^setAppFreqInfo$',setAppFreqInfo),
-
+			url(r'^manageAppStatus$',manageAppStatus),
+			
 			#authrization
 			# url(r'^getAuthCode$',getAuthCode),
 			# url(r'^getAccessToken$',getAccessToken),

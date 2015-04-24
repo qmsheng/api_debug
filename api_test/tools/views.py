@@ -33,7 +33,8 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 # secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
 
 # apiHost = "127.0.0.1"
-apiHost = "192.168.1.207"
+apiHost = "192.168.11.135"
+# apiHost = "115.231.73.17"
 # apiHost = "192.168.184.129"
 apiPort = "80"
 
@@ -260,9 +261,41 @@ FETCH_SECRET_ONLINE_INFO = (
 	('2','2--普通用户得到在线列表')
 )
 
+#第三方开发者类型
+DEVELOPER_TYPE = (
+	('0','0--语镜用户'),
+	('1','1--外部个人用户'),
+	('2','2--外部企业用户')
+)
 
+#设置开发者审核状态
+DEVELOPER_STATUS = (
+	('0','0--审核中'),
+	('1','1--审核通过'),
+	('2','2--无开发权限')
+)
 
+#设置第三方应用审核状态
+THIRD_PARTY_APP_STATUS = (
+	('0','0--审核中'),
+	('1','1--审核通过'),
+	('2','2--审核未通过')
+)
 
+#获取开发者审核状态
+GET_DEVELOPER_TYPE = (
+	('','所有'),
+	('0','0--审核中'),
+	('1','1--审核通过'),
+	('2','2--无开发权限')
+)
+
+#获取开发者的第三方应用
+VALIDITY_TYPE = (
+	('','所有'),
+	('0','0--无效'),
+	('1','1--有效'),
+)
 
 class classApplySecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
@@ -850,7 +883,7 @@ def getUserInformation(req):
 #第三方开发者注册身份信息
 class classRegisterIdentityInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	developerType = forms.ChoiceField( choices = DEVELOPER_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
 	developerName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	province = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	city = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -886,8 +919,8 @@ def registerIdentityInfo(req):
 #管理后台审核开发者状态
 class classManageDeveloperStatus(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	developerType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	developerType = forms.ChoiceField( choices = DEVELOPER_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
+	status = forms.ChoiceField( choices = DEVELOPER_STATUS, widget = forms.Select(attrs={'class':'form-control'}))
 
 def manageDeveloperStatus(req):
 	api_uri = "oauth/v2/manageDeveloperStatus"
@@ -920,7 +953,7 @@ def updateIdentityInfo(req):
 
 #管理后台获取开发者信息
 class classManageDeveloperInfo(forms.Form):
-	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	status = forms.ChoiceField( choices = GET_DEVELOPER_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
@@ -950,10 +983,21 @@ def createNewApp(req):
 	api_uri = "oauth/v2/createNewApp"
 	return templateApp(req, classCreateNewApp, api_uri , sys._getframe().f_code.co_name)
 
+#审核第三方应用状态
+class classManageAppStatus(forms.Form):
+	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	status = forms.ChoiceField( choices = THIRD_PARTY_APP_STATUS, widget = forms.Select(attrs={'class':'form-control'}))
+	reasonRejection = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def manageAppStatus(req):
+	api_uri = "oauth/v2/manageAppStatus"
+	return templateApp(req, classManageAppStatus, api_uri , sys._getframe().f_code.co_name)
+
+
 #获取开发者的应用信息，输入参数为appKey,sign,accountID,validity
 class classGetDeveloperAppInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	validity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	validity = forms.ChoiceField( choices = VALIDITY_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
 
 def getDeveloperAppInfo(req):
 	api_uri = "oauth/v2/getDeveloperAppInfo"
