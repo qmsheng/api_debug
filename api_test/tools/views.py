@@ -219,6 +219,13 @@ CATALOG_SECRET_LIST = (
 )
 
 
+#---- 群聊频道加入状态
+JOIN_CHANNEL_STATUS = (
+	('0','0--等待验证的频道'),
+	('2','2--管理员拒绝的频道'),
+)
+
+
 #---- 群聊频道开放类型
 SECRET_OPENTYPE = (
 	('0','0--非公开'),
@@ -359,6 +366,7 @@ class classFetchSecretChannel(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
+	status = forms.ChoiceField(choices=JOIN_CHANNEL_STATUS  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	catalogID = forms.ChoiceField( choices = CATALOG_SECRET_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	infoType = forms.ChoiceField(choices=FETCH_SECRET_INFO_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
