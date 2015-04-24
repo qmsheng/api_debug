@@ -97,7 +97,7 @@ def get_sign(dict):
 	dict['secret'] = secret
 	tuple = sortedDictValues(dict)
 	tmp_str = tuple_append(tuple)
-	print( tmp_str )
+	print("really get sign:", tmp_str )
 	sign = hashlib.sha1(tmp_str).hexdigest().upper()
 	print( sign )
 	del dict['secret']
@@ -109,7 +109,7 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 		form = template_form(req.POST)
 		dict = {} 
 		for item in req.POST:
-			dict[item] = req.POST[item]
+			dict[item] = req.POST[item].encode('utf-8')
 
 		if before_sign != None:
 			before_sign(dict)
