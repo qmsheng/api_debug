@@ -39,7 +39,8 @@ apiHost = "192.168.1.207"
 # appKey = "1111111111"
 # secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
 
-# apiHost = "192.168.1.207"
+# apiHost = "127.0.0.1"
+apiHost = "192.168.1.207"
 # apiHost = "192.168.11.135"
 # apiHost = "115.231.73.17"
 # apiHost = "192.168.184.129"
@@ -208,6 +209,7 @@ FETCH_SECRET_INFO_TYPE = (
 	('1', '1--群聊频道广场'),
 	('2', '2--已创建的频道'),
 	('3', '3--已加入的频道'),
+	('4', '4--等待验证/驳回的频道')
 )
 
 #---- 频道类别
@@ -272,6 +274,7 @@ SECRET_CUSTOMTYPE = (
 
 #得到在线列表
 FETCH_SECRET_ONLINE_INFO = (
+	('','可不传，自动识别普通用户或管理员'),
 	('1','1--管理员得到在线列表'),
 	('2','2--普通用户得到在线列表')
 )
@@ -441,7 +444,7 @@ def getSecretChannelInfo(req):
 class classGetUserJoinListSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	infoType = forms.ChoiceField( widget = forms.Select(attrs={'class':'form-control'}   ) )
+	infoType = forms.ChoiceField( choices = FETCH_SECRET_ONLINE_INFO, widget = forms.Select(attrs={'class':'form-control'} ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
 
