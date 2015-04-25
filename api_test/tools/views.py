@@ -23,19 +23,27 @@ import string
 # from django.views.decorators.csrf import csrf_exempt
 # from django.views.decorators.csrf import requires_csrf_token
 
+
+appKey = "184269830"
+secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
+# apiHost = "115.231.73.17"
+apiHost = "192.168.1.207"
+# apiHost = "192.168.184.136"
+
 # 点6
-appKey = "2064302565"
-secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
+# appKey = "2064302565"
+# secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 #沙箱
 # accountID = "SsYYnzgsdw"
 # appKey = "1111111111"
 # secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
 
-# apiHost = "127.0.0.1"
-apiHost = "192.168.11.135"
+# apiHost = "192.168.1.207"
+# apiHost = "192.168.11.135"
 # apiHost = "115.231.73.17"
 # apiHost = "192.168.184.129"
+
 apiPort = "80"
 
 def my_urlencode(str) :
@@ -593,7 +601,6 @@ NUMBER_TYPE = (
 )
 
 
-
 #创建道客帐户
 class classAddCustomAccount(forms.Form):
 	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  ) 
@@ -739,7 +746,7 @@ def getMirrtalkInfoByImei(req):
 #得到手机验证码
 class classGetMobileVerificationCode(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	# content = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getMobileVerificationCode(req):
 	api_uri = "accountapi/v2/getMobileVerificationCode"
@@ -763,6 +770,14 @@ def getUserInfo(req):
 	api_uri = "accountapi/v2/getUserInfo"
 	return templateApp(req, classGetUserInfo, api_uri , sys._getframe().f_code.co_name)
 
+#获取用户信息
+class classGetUserInformation(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label= "accountID" )
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserInformation(req):
+	api_uri = "accountapi/v2/getUserInformation"
+	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
 
 #判断帐户是否在线
 class classJudgeOnlineAccounJ(forms.Form):
@@ -873,13 +888,32 @@ def associateDeviceIDWithImei(req):
 	api_uri = "accountapi/v2/associateDeviceIDWithImei"
 	return templateApp(req, classAssociateDeviceIDWithImei, api_uri , sys._getframe().f_code.co_name)
 
-class classGetUserInformation(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label= "accountID" )
+#获取用户昵称
+class classGetUserData(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	field = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+def getUserData(req):
+	api_uri = "accountapi/v2/getUserData"
+	return templateApp(req, classGetUserData, api_uri , sys._getframe().f_code.co_name)
 
-def getUserInformation(req):
-	api_uri = "accountapi/v2/getUserInformation"
-	return templateApp(req, classGetUserInformation, api_uri , sys._getframe().f_code.co_name)
+# 获取手机号对应的验证码
+class classGetOauthVerifycode(forms.Form):
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getOauthVerifycode(req):
+	api_uri = "accountapi/v2/getOauthVerifycode"
+	return templateApp(req, classGetOauthVerifycode, api_uri , sys._getframe().f_code.co_name)
+
+# 认证新生成的验证码
+class classCheckOauthVerifycode(forms.Form):
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	verifyCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+def checkOauthVerifycode(req):
+	api_uri = "accountapi/v2/checkOauthVerifycode"
+	return templateApp(req, classCheckOauthVerifycode, api_uri , sys._getframe().f_code.co_name)
+
+
 #=====================================道客账户 end======================================================
 
 

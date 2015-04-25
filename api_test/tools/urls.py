@@ -75,7 +75,10 @@ urlpatterns = patterns (
 			url(r'^userBindAccountMirrtalk$',userBindAccountMirrtalk),
 			url(r'^verifyEmailOrMobile$',verifyEmailOrMobile),
 			url(r'^associateDeviceIDWithImei$',associateDeviceIDWithImei),
-	
+			url(r'^getUserData$',getUserData),
+			url(r'^getOauthVerifycode$',getOauthVerifycode),
+			url(r'^checkOauthVerifycode$',checkOauthVerifycode),
+
 
 			#--------------道客账户 end-------------------------
 
