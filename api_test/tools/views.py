@@ -279,6 +279,7 @@ FETCH_SECRET_ONLINE_INFO = (
 	('2','2--普通用户得到在线列表')
 )
 
+
 #第三方开发者类型
 DEVELOPER_TYPE = (
 	('0','0--语镜用户'),
@@ -300,6 +301,24 @@ THIRD_PARTY_APP_STATUS = (
 	('2','2--审核未通过')
 )
 
+
+#频道类别
+CATALOG_TYPE = (
+	('','--频道默认共用类别'),
+	('1','1--主播频道类别'),
+	('2','2--群聊频道类别')
+)
+
+class classGetCatalogInfo(forms.Form):
+	channelType = forms.ChoiceField(choices=CATALOG_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
+
+def getCatalogInfo(req):
+	api_uri = "clientcustom/v2/getCatalogInfo"
+	return templateApp(req, classGetCatalogInfo, api_uri , sys._getframe().f_code.co_name)
+
+
 #获取开发者审核状态
 GET_DEVELOPER_TYPE = (
 	('','所有'),
@@ -307,6 +326,7 @@ GET_DEVELOPER_TYPE = (
 	('1','1--审核通过'),
 	('2','2--无开发权限')
 )
+
 
 #获取开发者的第三方应用
 VALIDITY_TYPE = (
