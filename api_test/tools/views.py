@@ -433,7 +433,7 @@ def getSecretChannelInfo(req):
 class classGetUserJoinListSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	infoType = forms.ChoiceField(choices=FETCH_SECRET_ONLINE_INFO  , widget = forms.Select(attrs={'class':'form-control'}   ) )
+	infoType = forms.ChoiceField( widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
 
