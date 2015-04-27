@@ -226,10 +226,18 @@ CATALOG_SECRET_LIST = (
 	('100109','100109--交通出行'),
 	('100110','100110--应急救援'),
 	('100111','100111--两性情感'),
+	('300001', '300001--的哥'),
+	('300002' ,'300002--汽车'),
+	('300003' ,'300003--星座'),
+	('300004' ,'300004--地区'),
+	('300005' ,'300005--电影'),
+	('300006' ,'300006--闲谈'),
+	('300007' ,'300007--搞笑'),
+	('300008' ,'300008--旅行'),
 )
 
 
-#---- 群聊频道加入状态
+#' ,-'300001----'),- 群聊频道加入状态
 JOIN_CHANNEL_STATUS = (
 	('0','0--等待验证的频道'),
 	('2','2--管理员拒绝的频道'),
@@ -265,6 +273,12 @@ SECRET_USERKEY = (
 	('4','4--+键'),
 	('5','5--++键')
 
+)
+
+#---- 管理频道类型
+MANAGE_SECRET_TYPE = (
+	('1','1--公司管理频道(status  2 关闭频道)'),
+	('2','2--管理员管理频道(status 1 正常 2 禁言用户 3 拉黑用户)')
 )
 #---- 按键类型
 SECRET_CUSTOMTYPE = (
@@ -344,7 +358,7 @@ class classApplySecretChannel(forms.Form):
 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	openType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
 	isVerity = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
-
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 
 def applySecretChannel(req):
 	api_uri = "clientcustom/v2/applySecretChannel"
@@ -371,9 +385,9 @@ def modifySecretChannelInfo(req):
 class classManageSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  )
+	infoType = forms.ChoiceField(choices=MANAGE_SECRET_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	userAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
-	curStatus = forms.ChoiceField( choices = SECRET_USER_STATUS,  widget=forms.Select(attrs={'class':'form-control'} ) )
+	curStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 def manageSecretChannel(req):
 	api_uri = "clientcustom/v2/manageSecretChannelUsers"
 	return templateApp(req, classManageSecretChannel, api_uri , sys._getframe().f_code.co_name)
