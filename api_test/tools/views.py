@@ -23,9 +23,10 @@ import string
 # from django.views.decorators.csrf import csrf_exempt
 # from django.views.decorators.csrf import requires_csrf_token
 
-
-appKey = "184269830"
-secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
+appKey = '4223273916'
+secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
+# appKey = "184269830"
+# secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 # apiHost = "115.231.73.17"
 apiHost = "192.168.1.207"
 # apiHost = "192.168.184.136"
@@ -204,16 +205,14 @@ def index(req):
 
 
 
-#---- 获取频道类型 
-FETCH_SECRET_INFO_TYPE = (
-	('1', '1--群聊频道广场'),
-	('2', '2--已创建的频道'),
-	('3', '3--已加入的频道'),
-	('4', '4--等待验证/驳回的频道')
-)
+#频道类型
+GET_CHANNEL_TYPE = (
 
+	('1','1--主播频道'),
+	('2','2--群聊频道')
+)
 #---- 频道类别
-CATALOG_SECRET_LIST = (
+CATALOG_LIST = (
 	('','所有'),
 	('100101','100101--同事朋友'),
 	('100102','100102--车友会'),
@@ -234,10 +233,41 @@ CATALOG_SECRET_LIST = (
 	('300006' ,'300006--闲谈'),
 	('300007' ,'300007--搞笑'),
 	('300008' ,'300008--旅行'),
+	('200001','200001--节操几个钱'),
+	('200002','200002--美女要不要'),
+	('200003','200002--大叔也疯狂'),
+	('200004','200002--鲜肉来两斤'),
+	('200005','200002--旅行约一约'),
+	('200006','200002--两性深夜谈'),
+	('200007','200002--美食胖子送'),
+	('200008','200002--搞基自由')
+)
+
+#====================MicroChannel==========
+#频道状态
+MICROCHANNEL_STATUS = (
+	('0','0--未审核'),
+	('1','1--驳回'),
+	('2','2--成功')
+)
+#查询频道类型
+FETCH_MICRO_TYPE = (
+	('0','0--公司查询频道'),
+	('1','1--频道管理员查询频道'),
+	('2','2--普通用户查询频道')
+
+ )
+#================MIC END===================
+
+#---- 获取频道类型 
+FETCH_SECRET_INFO_TYPE = (
+	('1', '1--群聊频道广场'),
+	('2', '2--已创建的频道'),
+	('3', '3--已加入的频道'),
+	('4', '4--等待验证/驳回的频道')
 )
 
 
-#' ,-'300001----'),- 群聊频道加入状态
 JOIN_CHANNEL_STATUS = (
 	('0','0--等待验证的频道'),
 	('2','2--管理员拒绝的频道'),
@@ -354,7 +384,7 @@ class classApplySecretChannel(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_SECRET_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	openType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
 	isVerity = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
@@ -371,9 +401,10 @@ class classModifySecretChannelInfo(forms.Form):
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelOpenType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelIntro = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_SECRET_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelLogoUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCitycode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 
 def modifySecretChannelInfo(req):
 	api_uri = "clientcustom/v2/modifySecretChannelInfo"
@@ -412,7 +443,7 @@ class classFetchSecretChannel(forms.Form):
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	status = forms.ChoiceField(choices=JOIN_CHANNEL_STATUS  , widget = forms.Select(attrs={'class':'form-control'}   ) )
-	catalogID = forms.ChoiceField( choices = CATALOG_SECRET_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	catalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	infoType = forms.ChoiceField(choices=FETCH_SECRET_INFO_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
@@ -432,6 +463,18 @@ class classSecretMessage(forms.Form):
 def secretChannelMessage(req):
 	api_uri = "clientcustom/v2/secretChannelMessage"
 	return templateApp(req, classSecretMessage, api_uri , sys._getframe().f_code.co_name)
+
+
+
+class classGetCustomInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"4" } ))
+
+
+def getCustomInfo(req):
+	api_uri = "clientcustom/v2/getCustomInfo"
+	return templateApp(req, classGetCustomInfo, api_uri , sys._getframe().f_code.co_name)
+
 
 
 class classVeritySecretChannelMessage(forms.Form):
@@ -494,6 +537,104 @@ class classQuitSecretChannel(forms.Form):
 def quitSecretChannel(req):
 	api_uri = "clientcustom/v2/quitSecretChannel"
 	return templateApp(req, classQuitSecretChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+class classGetCatalogInfo(forms.Form):
+	channelType = forms.ChoiceField( choices = GET_CHANNEL_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getCatalogInfo(req):
+	api_uri = "clientcustom/v2/getCatalogInfo"
+	return templateApp(req, classGetCatalogInfo, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+#=====================================主播频道 begin==========================================
+
+class classApplyMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	chiefAnnouncerIntr = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def applyMicroChannel(req):
+	api_uri = "clientcustom/v2/applyMicroChannel"
+	return templateApp(req, classApplyMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+class classCheckApplyMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
+	checkAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) ) 
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	checkRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	applyIdx = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def checkApplyMicroChannel(req):
+	api_uri = "clientcustom/v2/checkApplyMicroChannel"
+	return templateApp(req, classCheckApplyMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+class classCheckApplyMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
+	checkAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) ) 
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	checkRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	applyIdx = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+
+def checkApplyMicroChannel(req):
+	api_uri = "clientcustom/v2/checkApplyMicroChannel"
+	return templateApp(req, classCheckApplyMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+class classFetchMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
+	channelStatus = forms.ChoiceField( choices = MICROCHANNEL_STATUS, widget = forms.Select(attrs={'class':'form-control'} ) )
+	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	catalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"1"})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':'20'})  )
+	infoType = forms.ChoiceField( choices = FETCH_MICRO_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def fetchMicroChannel(req):
+	api_uri = "clientcustom/v2/fetchMicroChannel"
+	return templateApp(req, classFetchMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+class classGetMicroChannelInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+
+
+def getMicroChannelInfo (req):
+	api_uri = "clientcustom/v2/getMicroChannelInfo "
+	return templateApp(req, classGetMicroChannelInfo, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+
+
+
+
+
+
+#===========================主播频道 end========================================================
+
 
 
 
