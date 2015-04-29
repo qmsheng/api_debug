@@ -902,6 +902,7 @@ def checkRegistration(req):
 #解绑imei
 class classDisconnectAccount(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def disconnectAccount(req):
 	api_uri = "accountapi/v2/disconnectAccount"
