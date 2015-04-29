@@ -46,10 +46,14 @@ urlpatterns = patterns (
 			url(r'^getCatalogInfo$',getCatalogInfo  ),
 
 			#------------user microChannel begin----------------------------
+			url(r'^modifyMicroChannel$',modifyMicroChannel ),
+			url(r'^followMicroChannel$',followMicroChannel ),
 			url(r'^applyMicroChannel$',applyMicroChannel ),
 			url(r'^checkApplyMicroChannel$',checkApplyMicroChannel ),
 			url(r'^fetchMicroChannel$',fetchMicroChannel ),
 			url(r'^getMicroChannelInfo$',getMicroChannelInfo ),
+
+
 			# url(r'^getBossFollowListMicroChannel$',getBossFollowListMicroChannel ),
 			# url(r'^followMicroChannel$',followMicroChannel ),
 			# url(r'^resetInviteUniqueCode$',resetInviteUniqueCode ),
