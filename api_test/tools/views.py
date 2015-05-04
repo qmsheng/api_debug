@@ -204,6 +204,7 @@ def index(req):
 
 
 
+
 #---- 获取频道类型 
 FETCH_SECRET_INFO_TYPE = (
 	('1', '1--群聊频道广场'),
@@ -212,14 +213,9 @@ FETCH_SECRET_INFO_TYPE = (
 	('4', '4--等待验证/驳回的频道')
 )
 
-#频道类型
-GET_CHANNEL_TYPE = (
-	('1','1--主播频道'),
-	('2','2--群聊频道')
-)
 #---- 频道类别
 CATALOG_LIST = (
-	('','所有以3开头为主播频道2是群聊频道'),
+	('','所有以2开头为主播频道3是群聊频道'),
 	('100101','100101--同事朋友'),
 	('100102','100102--车友会'),
 	('100103','100103--同城交友'),
@@ -241,36 +237,13 @@ CATALOG_LIST = (
 	('300008' ,'300008--旅行'),
 	('200001','200001--节操几个钱'),
 	('200002','200002--美女要不要'),
-	('200003','200002--大叔也疯狂'),
-	('200004','200002--鲜肉来两斤'),
-	('200005','200002--旅行约一约'),
-	('200006','200002--两性深夜谈'),
-	('200007','200002--美食胖子送'),
-	('200008','200002--搞基自由')
-)
+	('200003','200003--大叔也疯狂'),
+	('200004','200004--鲜肉来两斤'),
+	('200005','200005--旅行约一约'),
+	('200006','200006--两性深夜谈'),
+	('200007','200007--美食胖子送'),
+	('200008','200008--搞基自由')
 
-#====================MicroChannel==========
-#频道状态
-MICROCHANNEL_STATUS = (
-	('0','0--未审核'),
-	('1','1--驳回'),
-	('2','2--成功')
-)
-#查询频道类型
-FETCH_MICRO_TYPE = (
-	('0','0--公司查询频道'),
-	('1','1--频道管理员查询频道'),
-	('2','2--普通用户查询频道')
-
- )
-#================MIC END===================
-
-#---- 获取频道类型 
-FETCH_SECRET_INFO_TYPE = (
-	('1', '1--群聊频道广场'),
-	('2', '2--已创建的频道'),
-	('3', '3--已加入的频道'),
-	('4', '4--等待验证/驳回的频道')
 )
 
 JOIN_CHANNEL_STATUS = (
@@ -353,7 +326,13 @@ MODIFY_CHANNEL_TYPE = (
 	('1','1--修改未通过的频道微'),
 	('2','2--修改已通过的频道微')
 )
+
+FOLLOW_CHANNEL_TYPE = (
+	('1',"1--关注频道"),
+	('2',"2--解散频道")
+)
 #================MIC END===================
+
 
 #第三方开发者类型
 DEVELOPER_TYPE = (
@@ -376,15 +355,6 @@ THIRD_PARTY_APP_STATUS = (
 	('2','2--审核未通过')
 )
 
-
-#频道类别
-CATALOG_TYPE = (
-	('','--频道默认共用类别'),
-	('1','1--主播频道类别'),
-	('2','2--群聊频道类别')
-)
-
-
 #获取开发者审核状态
 GET_DEVELOPER_TYPE = (
 	('','所有'),
@@ -392,7 +362,6 @@ GET_DEVELOPER_TYPE = (
 	('1','1--审核通过'),
 	('2','2--无开发权限')
 )
-
 
 #获取开发者的第三方应用
 VALIDITY_TYPE = (
@@ -669,13 +638,29 @@ class classFollowMicroChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	uniqueCode 	= forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	followType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	
+	followType =  forms.ChoiceField( choices = FOLLOW_CHANNEL_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
 
 
 def followMicroChannel  (req):
 	api_uri = "clientcustom/v2/followMicroChannel  "
 	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+class classGetBossFollowList(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
+	startPage 	= forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"1"})   )
+	pageCount =  forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"20"})   )
+
+
+
+def getBossFollowListMicroChannel(req):
+	api_uri = "clientcustom/v2/getBossFollowListMicroChannel"
+	return templateApp(req, classGetBossFollowList, api_uri , sys._getframe().f_code.co_name)
+
+
+
 
 
 
