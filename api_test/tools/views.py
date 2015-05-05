@@ -1436,7 +1436,5 @@ class classUpdatePOIAttr(forms.Form):
 
 def updatePOIAttr(req):
 	api_uri = "mapapi/v2/updatePOIAttr"
-	api_host = "api.daoke.io"
-	api_port = 80
-	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name,api_host=api_host,api_port=api_port)
+	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name )
 #---------------------------map api ====end====================================================================
