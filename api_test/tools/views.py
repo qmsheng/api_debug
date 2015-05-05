@@ -1406,3 +1406,25 @@ def checkIsOnline(req):
 	api_uri = "clientcustom/v3/checkIsOnline"
 	return templateApp(req, classCheckIsOnline, api_uri , sys._getframe().f_code.co_name)
 #====================================weme setting end
+
+
+#---------------------------map api ===begin===================================================================
+
+class classUpdatePOIAttr(forms.Form):
+	ID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	NM = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	ST = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	TP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	BD = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	LD = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	DP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	TT = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+
+def updatePOIAttr(req):
+	api_uri = "mapapi/v2/updatePOIAttr"
+
+	# api_host = "api.daoke.io" 
+	# api_port = 80
+
+	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name)
+#---------------------------map api ====end====================================================================
