@@ -28,7 +28,7 @@ secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
 # appKey = "184269830"
 # secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 # apiHost = "115.231.73.17"
-apiHost = "192.168.1.207"
+# apiHost = "192.168.1.27"
 # apiHost = "192.168.184.136"
 
 # 点6
@@ -48,32 +48,46 @@ apiHost = "192.168.1.207"
 
 apiPort = "80"
 
+
+
+
 def my_urlencode(str) :
     reprStr = repr(str).replace(r'\x', '%')
     return reprStr[1:-1]
 
 def http_post_api(url, data ,api_host , api_port ):
-
-	tmp_api_host = apiHost
-	tmp_api_port = apiPort
+	tmp_api_host = ""
+	tmp_api_port = 0
 
 	if api_host != None and api_port != None :
+		
 		tmp_api_host = api_host
 		tmp_api_port = api_port
-		
-	requrl = "http://" + tmp_api_host + ":" + tmp_api_port +  "/" + url
+	else:
+		tmp_api_host = apiHost
+		tmp_api_port = apiPort
+
+	print("http_post_api===enter111")
+	print(tmp_api_host)
+	print(tmp_api_port)
+
+	# requrl = "http://" + tmp_api_host + ":" + tmp_api_port +  "/" + url
+	requrl = "http://{0}:{1}/{2}".format( tmp_api_host , tmp_api_port , url )
+
+	print("http_post_api===enter222" + requrl)
 
 	try:
 		headerdata = {"Host": tmp_api_host }
-
 		conn = httplib.HTTPConnection(tmp_api_host,tmp_api_port)
-		conn.request(method="POST",url = requrl,body= data, headers = headerdata) 
+		conn.request(method="POST",url = requrl, body = data, headers = headerdata) 
+
+		# conn.request(method="POST",url = requrl, body = data ) 
 
 		response = conn.getresponse()
 		res= response.read()
 		return res
 	except:
-		return  "http request failed : " +  requrl 
+	 	return  "http request failed : " +  requrl 
 
 def dict_to_str(dict):
 	return urllib.urlencode(dict)
@@ -1422,9 +1436,7 @@ class classUpdatePOIAttr(forms.Form):
 
 def updatePOIAttr(req):
 	api_uri = "mapapi/v2/updatePOIAttr"
-
-	# api_host = "api.daoke.io" 
-	# api_port = 80
-
-	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name)
+	api_host = "api.daoke.io"
+	api_port = 80
+	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name,api_host=api_host,api_port=api_port)
 #---------------------------map api ====end====================================================================
