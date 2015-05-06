@@ -138,12 +138,26 @@ urlpatterns = patterns (
 
 			#--------------daoke oauth---------------
 
+			#-------------clientcustom setting begin---------
+			url(r'^setCustomInfo$',setCustomInfo),
+			url(r'^setSubscribeMsg$',setSubscribeMsg),
+			url(r'^applyMicroChannel$',applyMicroChannel),
+			url(r'^checkApplyMicroChannel$',checkApplyMicroChannel),
+			url(r'^fetchMicroChannel$',fetchMicroChannel),
+			url(r'^followMicroChannel$',followMicroChannel),
+			url(r'^resetInviteUniqueCode$',resetInviteUniqueCode),
+			url(r'^setSubscribeMsg$',setSubscribeMsg),
+
+			#-------------clientcustom setting end-----------
+
 			#-------------WEME setting begin---------
 			url(r'^checkIsOnline$',checkIsOnline),
 			#-------------WEME setting end-----------
 
 			#------------reward api begin-----------------------
 			url(r'^addDepositInfo$',addDepositInfo),
+			url(r'^userFinanceConsume$',userFinanceConsume),
+
 			#------------reward api end-----------------------
 
 
