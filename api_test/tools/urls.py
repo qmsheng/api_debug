@@ -93,8 +93,10 @@ urlpatterns = patterns (
 			url(r'^verifyEmailOrMobile$',verifyEmailOrMobile),
 			url(r'^associateDeviceIDWithImei$',associateDeviceIDWithImei),
 			url(r'^getUserData$',getUserData),
-			url(r'^getOauthVerifycode$',getOauthVerifycode),
-			url(r'^checkOauthVerifycode$',checkOauthVerifycode),
+			# url(r'^getOauthVerifycode$',getOauthVerifycode),
+			# url(r'^checkOauthVerifycode$',checkOauthVerifycode),
+			url(r'^getDynamicVerifycode$',getDynamicVerifycode),
+			url(r'^checkDynamicVerifycode$',checkDynamicVerifycode),
 
 
 			#--------------道客账户 end-------------------------

@@ -27,8 +27,9 @@ appKey = '4223273916'
 secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
 # appKey = "184269830"
 # secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
+
 # apiHost = "115.231.73.17"
-# apiHost = "192.168.1.27"
+# apiHost = "192.168.1.207"
 # apiHost = "192.168.184.136"
 
 # 点6
@@ -42,9 +43,9 @@ secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
 
 # apiHost = "127.0.0.1"
 apiHost = "192.168.1.207"
-# apiHost = "192.168.11.135"
+# apiHost = "192.168.11.152"
 # apiHost = "115.231.73.17"
-# apiHost = "192.168.184.129"
+
 
 apiPort = "80"
 
@@ -676,15 +677,6 @@ def getBossFollowListMicroChannel(req):
 
 
 
-
-
-
-
-
-
-
-
-
 #===========================主播频道 end========================================================
 
 
@@ -1129,20 +1121,20 @@ def getUserData(req):
 	return templateApp(req, classGetUserData, api_uri , sys._getframe().f_code.co_name)
 
 # 获取手机号对应的验证码
-class classGetOauthVerifycode(forms.Form):
+class classGetDynamicVerifycode(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def getOauthVerifycode(req):
-	api_uri = "accountapi/v2/getOauthVerifycode"
-	return templateApp(req, classGetOauthVerifycode, api_uri , sys._getframe().f_code.co_name)
+def getDynamicVerifycode(req):
+	api_uri = "accountapi/v2/getDynamicVerifycode"
+	return templateApp(req, classGetDynamicVerifycode, api_uri , sys._getframe().f_code.co_name)
 
 # 认证新生成的验证码
-class classCheckOauthVerifycode(forms.Form):
+class classCheckDynamicVerifycode(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	verifyCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-def checkOauthVerifycode(req):
-	api_uri = "accountapi/v2/checkOauthVerifycode"
-	return templateApp(req, classCheckOauthVerifycode, api_uri , sys._getframe().f_code.co_name)
+def checkDynamicVerifycode(req):
+	api_uri = "accountapi/v2/checkDynamicVerifycode"
+	return templateApp(req, classCheckDynamicVerifycode, api_uri , sys._getframe().f_code.co_name)
 
 
 #=====================================道客账户 end======================================================
