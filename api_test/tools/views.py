@@ -477,7 +477,7 @@ class classModifySecretChannelInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	channelOpenType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelOpenType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
 	channelIntro = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelCatalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelLogoUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
