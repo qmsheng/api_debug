@@ -372,6 +372,8 @@ FOLLOW_CHANNEL_TYPE = (
 #================MIC END===================
 
 
+#================OAUTH BEGIN===============
+
 #第三方开发者类型
 DEVELOPER_TYPE = (
 	('0','0--语镜用户'),
@@ -407,6 +409,38 @@ VALIDITY_TYPE = (
 	('0','0--无效'),
 	('1','1--有效'),
 )
+
+#设置APP频率控制FreqType
+OAUTH_FREQUENCY_TYPE = (
+	('','暂时支持第一种'),
+	('1','1--每小时/每天/每月/每年'),
+	('2','2--包年/包月'),
+)
+
+#暂不支持
+OAUTH_NOT_SUPPORT_NOW = (
+	('','暂时不支持'),
+)
+
+#设置APP频率控制customType
+OAUTH_CUSTOM_TYPE = (
+	('1','1--每年'),
+	('2','2--每月'),
+	('3','3--每天'),
+	('4','4--每小时'),
+)
+
+
+#OAUTH第三方开发者类型(对应appKeyInfo)
+#1:内部用户,2:企业用户,3:个人用户,4:合同用户
+OAUTH_DEVELOPER_TYPE = (
+	('1','1--内部用户'),
+	('2','2--企业用户'),
+	('3','3--个人用户(需要accountID)'),
+	('4','4--合同用户'),
+)
+
+#===============OAUTH END=====================
 
 class classApplySecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
@@ -1250,10 +1284,12 @@ def getAppKeyInfo(req):
 
 #生成新应用
 class classCreateNewApp(forms.Form):
+	developerType = forms.ChoiceField( choices = OAUTH_DEVELOPER_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	name = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	website = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	appLogo = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def createNewApp(req):
 	api_uri = "oauth/v2/createNewApp"
@@ -1310,17 +1346,45 @@ def getDeveloperAppInfo(req):
 # 	api_uri = "oauth/v2/manageAppChangeLevel"
 # 	return templateApp(req, classManageAppChangeLevel, api_uri , sys._getframe().f_code.co_name)
 
-#OAUTH授权频次控制
+#设置OAUTH授权频次控制
 class classSetAppFreqInfo(forms.Form):
 	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	apiName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	frequencyType = forms.ChoiceField( choices = OAUTH_FREQUENCY_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
+	customType = forms.ChoiceField( choices = OAUTH_CUSTOM_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
 	requestCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	frequencyType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	#暂时不支持
+	# startTime = forms.ChoiceField( choices = OAUTH_NOT_SUPPORT_NOW, widget = forms.Select(attrs={'class':'form-control'}))
+	# endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def setAppFreqInfo(req):
 	api_uri = "oauth/v2/setAppFreqInfo"
 	return templateApp(req, classSetAppFreqInfo, api_uri , sys._getframe().f_code.co_name)	
+
+#获取OAUTH授权频次控制
+class classGetAppFreqInfo(forms.Form):
+	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	apiName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getAppFreqInfo(req):
+	api_uri = "oauth/v2/getAppFreqInfo"
+	return templateApp(req, classGetAppFreqInfo, api_uri , sys._getframe().f_code.co_name)
+
+#更新OAUTH授权频次控制
+class classUpdateAppFreqInfo(forms.Form):
+	clientAppKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	apiName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	frequencyType = forms.ChoiceField( choices = OAUTH_FREQUENCY_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
+	customType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	requestCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	# startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	# endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def updateAppFreqInfo(req):
+	api_uri = "oauth/v2/updateAppFreqInfo"
+	return templateApp(req, classUpdateAppFreqInfo, api_uri , sys._getframe().f_code.co_name)		
 
 #授权认证
 # class classGetAuthCode(forms.Form):
