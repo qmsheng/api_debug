@@ -41,41 +41,49 @@ secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
 # appKey = "1111111111"
 # secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
 
-# apiHost = "127.0.0.1"
-apiHost = "192.168.1.207"
-# apiHost = "192.168.11.152"
-# apiHost = "115.231.73.17"
 
+api_server_list = {
+	"debug":"192.168.1.207",
+	"sendbox":"s9ct.mirrtalk.com",
+	"production":"api.daoke.io",  #正式环境
+}
 
-apiPort = "80"
+api_post_list = {
+	"debug":80,
+	"sendbox":80,
+	"production":80,
+}
 
+api_remark_list = {
+	"debug":"线下调试",
+	"sendbox":"沙箱环境",
+	"production":"正式环境",
+}
 
-
+global_env_flag = ""
 
 def my_urlencode(str) :
     reprStr = repr(str).replace(r'\x', '%')
     return reprStr[1:-1]
 
-def http_post_api(url, data ,api_host , api_port ):
+def http_post_api(req , url, data ,api_host , api_port ):
 	tmp_api_host = ""
 	tmp_api_port = 0
 
 	if api_host != None and api_port != None :
-		
 		tmp_api_host = api_host
 		tmp_api_port = api_port
 	else:
-		tmp_api_host = apiHost
-		tmp_api_port = apiPort
 
-	print("http_post_api===enter111")
-	print(tmp_api_host)
-	print(tmp_api_port)
+		tmp_env_flag = req.session['environment']
 
-	# requrl = "http://" + tmp_api_host + ":" + tmp_api_port +  "/" + url
+		tmp_api_host = api_server_list[tmp_env_flag]
+		tmp_api_port = api_post_list[tmp_env_flag]
+
 	requrl = "http://{0}:{1}/{2}".format( tmp_api_host , tmp_api_port , url )
 
-	print("http_post_api===enter222" + requrl)
+	print(requrl)
+
 
 	try:
 		headerdata = {"Host": tmp_api_host }
@@ -151,7 +159,7 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 		object_data = None
 
 		try:
-			result_msg = http_post_api(uri,request_msg, api_host, api_port )
+			result_msg = http_post_api(req , uri,request_msg, api_host, api_port )
 			object_data = json.loads(result_msg)
 		except :
 			print result_msg
@@ -173,9 +181,13 @@ class UserForm(forms.Form):
 def login(req):
 	if req.method == 'POST':
 		username = req.POST['username']
+		environment = req.POST['environment']
+
 		if username and len(username) == 10:
 			req.session['username'] = username
-			return HttpResponseRedirect("index", { 'username' : username } ) 
+			req.session['environment'] = environment
+			return HttpResponseRedirect("index")
+
 		else:
 			return render_to_response('login.html', { 'error_msg' : "accountID不正确" }  )
 	else:
@@ -186,6 +198,9 @@ def logout(req):
 	username = req.session.get('username')
 	if username:
 		del req.session['username']
+	if req.session['environment']:
+		del req.session['environment']
+
 	return HttpResponseRedirect("login") 
 		
 def left(req):
@@ -205,14 +220,22 @@ def right(req):
 def top(req):
 	username = req.session.get('username')
 	if username:
-		return render_to_response('top.html', { 'username' : req.session['username'] } )
+
+		tmp_env_flag = req.session['environment']
+		server = api_remark_list[tmp_env_flag]
+		host = api_server_list[tmp_env_flag] 
+		port = api_post_list[tmp_env_flag]
+
+		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port  } )
 	else:
 		return HttpResponseRedirect("login") 
 
 def index(req):
 	username = req.session.get('username')
 	if username:
-		return render_to_response('index.html', { 'username' : username } )
+		
+
+		return render_to_response('index.html', { 'username' : username  } )
 	else:
 		return HttpResponseRedirect("login") 
 #-------------------------------login end--------------------------------------------------------------------
@@ -257,7 +280,7 @@ CATALOG_LIST = (
 	('200005','200005--旅行约一约'),
 	('200006','200006--两性深夜谈'),
 	('200007','200007--美食胖子送'),
-	('200008','200008--搞基自由')
+	('200008','200008--搞基自由'),
 
 )
 
@@ -1399,6 +1422,64 @@ def setSubscribeMsg(req):
 	api_uri = "clientcustom/v2/setSubscribeMsg"
 	return templateApp(req, classSetSubscribeMsg, api_uri , sys._getframe().f_code.co_name )
 
+<<<<<<< HEAD
+class classApplyMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	openType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	isVerity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def applyMicroChannel(req):
+	api_uri = "clientcustom/v2/applyMicroChannel"
+	return templateApp(req, classApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+class classCheckApplyMicroChannel(forms.Form):
+	checkAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	checkRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def checkApplyMicroChannel(req):
+	api_uri = "clientcustom/v2/checkApplyMicroChannel"
+	return templateApp(req, classCheckApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+class classFetchMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	catalogID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+
+def fetchMicroChannel(req):
+	api_uri = "clientcustom/v2/fetchMicroChannel"
+	return templateApp(req, classFetchMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+class classFollowMicroChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	uniqueCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	followType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+
+def followMicroChannel(req):
+	api_uri = "clientcustom/v2/followMicroChannel"
+	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name )
+=======
+>>>>>>> 000bceea47371730bdc901ac40276e59f84d636f
 
 class classResetInviteUniqueCode(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
