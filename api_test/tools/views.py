@@ -252,8 +252,7 @@ FETCH_SECRET_INFO_TYPE = (
 )
 
 #---- 频道类别
-CATALOG_LIST = (
-	('','所有以2开头为主播频道3是群聊频道'),
+SECRET_CATALOG_LIST = (
 	('100101','100101--同事朋友'),
 	('100102','100102--车友会'),
 	('100103','100103--同城交友'),
@@ -272,7 +271,23 @@ CATALOG_LIST = (
 	('300005' ,'300005--电影'),
 	('300006' ,'300006--闲谈'),
 	('300007' ,'300007--搞笑'),
-	('300008' ,'300008--旅行'),
+	('300008' ,'300008--旅行')
+
+)
+#--微频道
+MIC__CATALOG_LIST = (
+
+	('100101','100101--同事朋友'),
+	('100102','100102--车友会'),
+	('100103','100103--同城交友'),
+	('100104','100104--兴趣爱好'),
+	('100105','100105--行业交流'),
+	('100106','100106--吃喝玩乐'),
+	('100107','100107--品牌产品'),
+	('100108','100108--线下服务'),
+	('100109','100109--交通出行'),
+	('100110','100110--应急救援'),
+	('100111','100111--两性情感'),
 	('200001','200001--节操几个钱'),
 	('200002','200002--美女要不要'),
 	('200003','200003--大叔也疯狂'),
@@ -280,7 +295,7 @@ CATALOG_LIST = (
 	('200005','200005--旅行约一约'),
 	('200006','200006--两性深夜谈'),
 	('200007','200007--美食胖子送'),
-	('200008','200008--搞基自由'),
+	('200008','200008--搞基自由')
 
 )
 
@@ -447,7 +462,7 @@ class classApplySecretChannel(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	openType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
 	isVerity = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
@@ -464,7 +479,7 @@ class classModifySecretChannelInfo(forms.Form):
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelOpenType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelIntro = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelLogoUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCitycode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
@@ -506,7 +521,7 @@ class classFetchSecretChannel(forms.Form):
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	status = forms.ChoiceField(choices=JOIN_CHANNEL_STATUS  , widget = forms.Select(attrs={'class':'form-control'}   ) )
-	catalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	catalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	infoType = forms.ChoiceField(choices=FETCH_SECRET_INFO_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
@@ -624,7 +639,7 @@ class classApplyMicroChannel(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = MIC__CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	chiefAnnouncerIntr = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
@@ -653,7 +668,7 @@ class classFetchMicroChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
 	channelStatus = forms.ChoiceField( choices = MICROCHANNEL_STATUS, widget = forms.Select(attrs={'class':'form-control'} ) )
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	catalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	catalogID = forms.ChoiceField( choices = MIC__CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
@@ -678,7 +693,7 @@ def getMicroChannelInfo (req):
 class classModifyMicroChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	channelCatalogID = forms.ChoiceField( choices = MIC__CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
