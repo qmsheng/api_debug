@@ -29,8 +29,14 @@ import string
 # appKey = "184269830"
 # secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 
-appKey = "3862015082"
-secret = "5693BBB00ED6BE8A606A4D6A866DF8466DC70D10"
+# appKey = "3862015082"
+# secret = "5693BBB00ED6BE8A606A4D6A866DF8466DC70D10"
+
+
+# KLD01 
+appKey = "3994652484"
+secret = "E4C9D76696927B1D964B451B031601E6539EA583"
+
 
 # apiHost = "115.231.73.17"
 # apiHost = "192.168.1.207"
@@ -130,9 +136,9 @@ def sortedDictValues(adict):
 	return [ (key, value) for key, value in items] 
 
 
-def get_sign(dict):
-	dict['appKey'] = appKey
-	dict['secret'] = secret
+def get_sign(dict, appkey_v , secret_v ):
+	dict['appKey'] = appkey_v
+	dict['secret'] = secret_v
 	tuple = sortedDictValues(dict)
 	tmp_str = tuple_append(tuple)
 	print("really get sign:", tmp_str )
@@ -152,7 +158,13 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 		if before_sign != None:
 			before_sign(dict)
 
-		dict['sign'] = get_sign(dict)
+		tmp_appkey = appKey
+		tmp_secret = secret
+		if req.session['appKey'] and req.session['secret']:
+			tmp_appkey = req.session['appKey']
+			tmp_secret = req.session['secret']
+
+		dict['sign'] = get_sign(dict, tmp_appkey , tmp_secret)
 
 		if after_sign != None:
 			after_sign(dict)
@@ -176,6 +188,26 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 
 
 
+def templateApp_Debug(req, template_form,  uri , api_action , api_html = "apiform.html", api_host = None, api_port = None, before_sign = None, after_sign = None ):
+	if req.method == 'POST':
+		form = template_form(req.POST)
+		for item in req.POST:
+			dict[item] = req.POST[item].encode('utf-8')
+			if item == "appKey":
+				req.session['appKey'] = req['appKey']
+			elif item == "secret":
+				req.session['secret'] = req['secret']
+
+		print(req.session['appKey'])
+		print(req.session['secret'])
+
+		return render_to_response(api_html, {'form':form, "api_action": api_action ,  "api_account": req.session['username'] , "uri": uri,  "request_msg":request_msg, "result_msg":result_msg, "object_data":object_data } )
+	else:
+		form = template_form()
+		return render_to_response(api_html,{'form':form, "api_action": api_action , "api_account": req.session['username'] })
+
+
+
 #=======================================login begin=========================================================================
 
 class UserForm(forms.Form):
@@ -187,14 +219,30 @@ def login(req):
 		username = req.POST['username']
 		environment = req.POST['environment']
 
+		appKey = req.POST['appKey']
+		secret = req.POST['secret']
+
 		if username and len(username) == 10:
 			req.session['username'] = username
 			req.session['environment'] = environment
+
+			req.session['appKey'] = appKey
+			req.session['secret'] = secret
+
 			return HttpResponseRedirect("index")
 
 		else:
 			return render_to_response('login.html', { 'error_msg' : "accountID不正确" }  )
 	else:
+		# if req.session['environment']:
+		# 	del req.session['environment']
+
+		# if req.session['appKey']:
+		# 	del req.session['appKey']
+
+		# if req.session['secret']:
+		# 	del req.session['secret']
+
 		uf = UserForm()
 		return render_to_response('login.html',{'uf':uf})
 
@@ -204,6 +252,12 @@ def logout(req):
 		del req.session['username']
 	if req.session['environment']:
 		del req.session['environment']
+
+	# if req.session['appKey']:
+	# 	del req.session['appKey']
+
+	# if req.session['secret']:
+	# 	del req.session['secret']
 
 	return HttpResponseRedirect("login") 
 		
@@ -230,15 +284,15 @@ def top(req):
 		host = api_server_list[tmp_env_flag] 
 		port = api_post_list[tmp_env_flag]
 
-		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port  } )
+		appkey = req.session['appKey']
+
+		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port , "appkey":appkey  } )
 	else:
 		return HttpResponseRedirect("login") 
 
 def index(req):
 	username = req.session.get('username')
 	if username:
-		
-
 		return render_to_response('index.html', { 'username' : username  } )
 	else:
 		return HttpResponseRedirect("login") 
@@ -511,6 +565,7 @@ class classSetCustomInfo(forms.Form):
 	actionType = forms.ChoiceField( choices = SECRET_USERKEY,  widget=forms.Select(attrs={'class':'form-control'} ) )
 	customType = forms.ChoiceField( choices = SECRET_CUSTOMTYPE, widget=forms.Select(attrs={'class':'form-control' })  ) 
 	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
+
 def setCustomInfo(req):
 	api_uri = "clientcustom/v2/setCustomInfo"
 	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name)
@@ -1459,7 +1514,7 @@ def getImplicitToken(req):
 #trust
 class classGetTrustAuthCode(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"userInfo,realTimeInfo,collectInfo,drivingInfo,weibo,reward,bindmirrtalk" } ))
 
 def getTrustAuthCode(req):
 	api_uri = "oauth/v2/getTrustAuthCode"
@@ -1467,9 +1522,9 @@ def getTrustAuthCode(req):
 
 class classGetTrustAccessCode(forms.Form):
 	code = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	grantType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':'authorizationCode' } ))
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	scope = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"userInfo,realTimeInfo,collectInfo,drivingInfo,weibo,reward,bindmirrtalk"  } ))
 
 def getTrustAccessCode(req):
 	api_uri = "oauth/v2/getTrustAccessCode"
@@ -1647,4 +1702,22 @@ class classUserConfigInfo(forms.Form):
 def userConfigInfo(req):
 	api_uri = "accountapi/v2/getCustomArgs"
 	return templateApp(req, classUserConfigInfo, api_uri , sys._getframe().f_code.co_name )
+
+
+class classSetAppKeySecret(forms.Form):
+	appKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	secret = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def setAppKeySecret(req):
+	api_uri = ""
+	return templateApp_Debug(req, classSetAppKeySecret, api_uri  , sys._getframe().f_code.co_name )
+
+class classDevicePowerOn(forms.Form):
+	imei = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	imsi = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	mod = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def devicePowerOn(req):
+	api_uri = "config"
+	return templateApp(req, classDevicePowerOn, api_uri  , sys._getframe().f_code.co_name )	
 #------------------------------------ main debug add  api  ========end===========================

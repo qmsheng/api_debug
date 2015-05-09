@@ -169,7 +169,10 @@ urlpatterns = patterns (
 
 			
 			#---------------map api-------------------------
+			url(r'^setAppKeySecret$',setAppKeySecret),
 			url(r'^userConfigInfo$',userConfigInfo),
+			url(r'^devicePowerOn$',devicePowerOn),
+			
 			#------------------------------------------------
 
 	)

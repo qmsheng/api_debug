@@ -139,13 +139,10 @@
     <li><a href="associateDeviceIDWithImei" data="associateDeviceIDWithImei" name="clientcustom"  target= "right"  >车机设备号与道客imei关联</a></li>
     <li><a href="getDynamicVerifycode" data="getDynamicVerifycode" name="clientcustom"  target= "right"  >获取手机号对应的验证码(dynamic)</a></li>
     <li><a href="checkDynamicVerifycode" data="checkDynamicVerifycode" name="clientcustom"  target= "right"  >认证新生成的验证码(dynamic)</a></li>
-
-
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="clientcustom">WEME设置</a>
   <ul class="nav apiList none" name="WEME设置" style="display: none;">
-    
     <li><a href="setCustomInfo" data="setCustomInfo" name="clientcustom"  target= "right"  >设置用户按键自定义接口</a></li>
     <li><a href="setSubscribeMsg" data="setSubscribeMsg" name="clientcustom"  target= "right"  >设置用户WEME订阅功能开关</a></li>
     <li><a href="applyMicroChannel" data="applyMicroChannel" name="clientcustom"  target= "right"  >用户申请微频道</a></li>
@@ -154,14 +151,12 @@
     <li><a href="followMicroChannel" data="followMicroChannel" name="clientcustom"  target= "right"  >关注/取消关注微频道</a></li>
     <li><a href="resetInviteUniqueCode" data="resetInviteUniqueCode" name="clientcustom"  target= "right"  >更新微/密的邀请码</a></li>
     <li><a href="setSubscribeMsg" data="setSubscribeMsg" name="clientcustom"  target= "right"  >设置用户微博开关</a></li>
-
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="rewardapi">众酬API</a>
   <ul class="nav apiList none" name="众酬API" style="display: none;">
    <li><a href="addDepositInfo" data="addDepositInfo" name="rewardapi" target= "right" >初始化押金</a></li>
    <li><a href="userFinanceConsume" data="userFinanceConsume" name="rewardapi" target= "right" >用户资金消费</a></li>
-
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="mapapi">地图API</a>
@@ -171,13 +166,15 @@
 
   <a href="javascript:;" class="list-group-item apiGather " data="MainDebug">IO调试</a>
   <ul class="nav apiList none" name="IO调试" style="display: none;">
-    <li><a href="generateDaokeAccount" data="generateDaokeAccount"   name="MainDebug" target= "right" >1) 注册生成道客账户</a></li>
+    <li><a href="getAppKeyInfo"  data="getAppKeyInfo" name="MainDebug" target= "right" >0) 获取appKeyInfo</a></li>
+    <!-- <li><a href="setAppKeySecret"  data="setAppKeySecret" name="MainDebug" target= "right" >0) 设置appKey调用</a></li> -->
+    <li><a href="generateDaokeAccount" data="generateDaokeAccount"  name="MainDebug" target= "right" >1) 注册生成道客账户</a></li>
     <li><a href="getTrustAuthCode"  data="getTrustAuthCode" name="MainDebug" target= "right" >2) 获取OauthCode</a></li>
     <li><a href="getTrustAccessCode"  data="getTrustAccessCode" name="MainDebug" target= "right" >3) 获取AccessToken</a></li>
-    <li><a href="associateAccountWithAccountID"  data="associateAccountWithAccountID" name="MainDebug" target= "right" >4) 设备关联IMEI</a></li>
+    <li><a href="associateDeviceIDWithImei"  data="associateDeviceIDWithImei" name="MainDebug" target= "right" >4) 设备关联IMEI</a></li>
     <li><a href="userBindAccountMirrtalk"  data="userBindAccountMirrtalk" name="MainDebug" target= "right" >5) 道客账户绑定IMEI</a></li>
     <li><a href="userConfigInfo"  data="userConfigInfo" name="MainDebug" target= "right" >6) 开机参数设置</a></li>
-    <li><a href="addCustomAccount"  data="addCustomAccount" name="MainDebug" target= "right" >7) 模拟config接口</a></li>
+    <li><a href="devicePowerOn"  data="devicePowerOn" name="MainDebug" target= "right" >7) 模拟模拟</a></li>
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="other">Other</a>
