@@ -23,10 +23,14 @@ import string
 # from django.views.decorators.csrf import csrf_exempt
 # from django.views.decorators.csrf import requires_csrf_token
 
-appKey = '4223273916'
-secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
+# appKey = '4223273916'
+# secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
+
 # appKey = "184269830"
 # secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
+
+appKey = "3862015082"
+secret = "5693BBB00ED6BE8A606A4D6A866DF8466DC70D10"
 
 # apiHost = "115.231.73.17"
 # apiHost = "192.168.1.207"
@@ -1613,7 +1617,7 @@ class classCheckIsOnline(forms.Form):
 
 def checkIsOnline(req):
 	api_uri = "clientcustom/v3/checkIsOnline"
-	return templateApp(req, classCheckIsOnline, api_uri , sys._getframe().f_code.co_name)
+	return templateApp(req, classCheckIsOnline, api_uri , sys._getframe().f_code.co_name ,api_html = "apiform_ex.html"  )
 #====================================weme setting end
 
 
@@ -1633,3 +1637,14 @@ def updatePOIAttr(req):
 	api_uri = "mapapi/v2/updatePOIAttr"
 	return templateApp(req, classUpdatePOIAttr, api_uri , sys._getframe().f_code.co_name )
 #---------------------------map api ====end====================================================================
+
+
+#------------------------------------ main debug add  api  ========begin===========================
+class classUserConfigInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def userConfigInfo(req):
+	api_uri = "accountapi/v2/getCustomArgs"
+	return templateApp(req, classUserConfigInfo, api_uri , sys._getframe().f_code.co_name )
+#------------------------------------ main debug add  api  ========end===========================

@@ -167,5 +167,9 @@ urlpatterns = patterns (
 			url(r'^updatePOIAttr$',updatePOIAttr),
 			#------------------------------------------------
 
+			
+			#---------------map api-------------------------
+			url(r'^userConfigInfo$',userConfigInfo),
+			#------------------------------------------------
 
 	)
