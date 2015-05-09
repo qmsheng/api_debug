@@ -285,8 +285,9 @@ def top(req):
 		port = api_post_list[tmp_env_flag]
 
 		appkey = req.session['appKey']
+		secret = req.session['secret']
 
-		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port , "appkey":appkey  } )
+		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port , "appkey":appkey ,"secret":secret } )
 	else:
 		return HttpResponseRedirect("login") 
 
@@ -560,15 +561,15 @@ def manageSecretChannel(req):
 	return templateApp(req, classManageSecretChannel, api_uri , sys._getframe().f_code.co_name)
 
 
-class classSetCustomInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
-	actionType = forms.ChoiceField( choices = SECRET_USERKEY,  widget=forms.Select(attrs={'class':'form-control'} ) )
-	customType = forms.ChoiceField( choices = SECRET_CUSTOMTYPE, widget=forms.Select(attrs={'class':'form-control' })  ) 
-	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
+# class classSetCustomInfo(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+# 	actionType = forms.ChoiceField( choices = SECRET_USERKEY,  widget=forms.Select(attrs={'class':'form-control'} ) )
+# 	customType = forms.ChoiceField( choices = SECRET_CUSTOMTYPE, widget=forms.Select(attrs={'class':'form-control' })  ) 
+# 	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
 
-def setCustomInfo(req):
-	api_uri = "clientcustom/v2/setCustomInfo"
-	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name)
+# def setCustomInfo(req):
+# 	api_uri = "clientcustom/v2/setCustomInfo"
+# 	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name)
 
 
 
@@ -885,17 +886,16 @@ LOGIN_TYPE = (
 	('7','7--第三方信任账户'),
 )
 
-
-def api_function(dict):
-	if dict['gender'] == "1":
-		del dict['Female']
-		del dict['Neutral']
-	elif dict['gender'] == "2":
-		del dict['man']
-		del dict['Neutral']
-	elif dict['gender'] == "3":
-		del dict['man']
-		del dict['Female']
+# def api_function(dict):
+# 	if dict['gender'] == "1":
+# 		del dict['Female']
+# 		del dict['Neutral']
+# 	elif dict['gender'] == "2":
+# 		del dict['man']
+# 		del dict['Neutral']
+# 	elif dict['gender'] == "3":
+# 		del dict['man']
+# 		del dict['Female']
 
 # 1男,2女,3中性
 GENDER_TYPE = (
@@ -904,16 +904,16 @@ GENDER_TYPE = (
 	('3','3--中性'),
 )
 
-def api_function(dict):
-	if dict['numberType'] == "0":
-		del dict['talk_key']
-		del dict['Sound_record']
-	elif dict['numberType'] == "1":
-		del dict['number']
-		del dict['Sound_record']
-	elif dict['numberType'] == "4":
-		del dict['number']
-		del dict['talk_key']
+# def api_function(dict):
+# 	if dict['numberType'] == "0":
+# 		del dict['talk_key']
+# 		del dict['Sound_record']
+# 	elif dict['numberType'] == "1":
+# 		del dict['number']
+# 		del dict['Sound_record']
+# 	elif dict['numberType'] == "4":
+# 		del dict['number']
+# 		del dict['talk_key']
 
 # 0表示两个号码,1代表吐槽键,4代表录音键
 NUMBER_TYPE = (
@@ -923,16 +923,16 @@ NUMBER_TYPE = (
 )
 
 
-def api_function(dict):
-	if dict['numberType'] == "0":
-		del dict['one']
-		del dict['four']
-	elif dict['numberType'] == "1":
-		del dict['all']
-		del dict['four']
-	elif dict['numberType'] == "4":
-		del dict['all']
-		del dict['one']
+# def api_function(dict):
+# 	if dict['numberType'] == "0":
+# 		del dict['one']
+# 		del dict['four']
+# 	elif dict['numberType'] == "1":
+# 		del dict['all']
+# 		del dict['four']
+# 	elif dict['numberType'] == "4":
+# 		del dict['all']
+# 		del dict['one']
 
 #0表示两个号码都恢复默认值；1表示一号键callcenter恢复默认值；4，表示四号键sos恢复默认
 NUMBER_TYPE = (
@@ -1021,11 +1021,11 @@ def disconnectAccount(req):
 #更新用户资料
 class classFixUserInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	nickname = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	userEmail = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	gender = forms.ChoiceField( choices = GENDER_TYPE , widget = forms.Select(attrs = {'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def fixUserInfo(req):
 	api_uri = "accountapi/v2/fixUserInfo"
@@ -1097,8 +1097,8 @@ def getMobileVerificationCode(req):
 #得到用户自定义号码
 class classGetUserCustomNumber(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	numberType = forms.ChoiceField( choices = NUMBER_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getUserCustomNumber(req):
 	api_uri = "accountapi/v2/getUserCustomNumber"
@@ -1141,8 +1141,8 @@ def judgeOnlineMobile(req):
 #重置用户自定义号码
 class classResetUserCustomNumber(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 	numberType = forms.ChoiceField( choices = NUMBER_TYPE ,widget = forms.Select(attrs = {'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 
 def resetUserCustomNumber(req):
 	api_uri = "accountapi/v2/resetUserCustomNumber"
@@ -1170,9 +1170,9 @@ def sendVerificationURL(req):
 #设置用户自定义号码
 class classSetUserCustomNumber(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	call1Number = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	call2Number = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def setUserCustomNumber(req):
 	api_uri = "accountapi/v2/setUserCustomNumber"
@@ -1181,9 +1181,9 @@ def setUserCustomNumber(req):
 #更改用户自定义参数
 class classUpdateCustomArgs(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	customArgs = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 
 def updateCustomArgs(req):
 	api_uri = "accountapi/v2/updateCustomArgs"
@@ -1192,9 +1192,9 @@ def updateCustomArgs(req):
 #更改用户道客密码
 class classUpdateUserPassword(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	oldPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	newPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def updateUserPassword(req):
 	api_uri = "accountapi/v2/updateUserPassword"
@@ -1203,8 +1203,8 @@ def updateUserPassword(req):
 #绑定imei
 class classUserBindAccountMirrtalk(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def userBindAccountMirrtalk(req):
 	api_uri = "accountapi/v2/userBindAccountMirrtalk"
@@ -1213,9 +1213,9 @@ def userBindAccountMirrtalk(req):
 #验证手机或邮箱
 class classVerifyEmailOrMobile(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 	email = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
 
 def verifyEmailOrMobile(req):
 	api_uri = "accountapi/v2/verifyEmailOrMobile"
@@ -1233,8 +1233,9 @@ def associateDeviceIDWithImei(req):
 #获取用户昵称
 class classGetUserData(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	field = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	
 def getUserData(req):
 	api_uri = "accountapi/v2/getUserData"
 	return templateApp(req, classGetUserData, api_uri , sys._getframe().f_code.co_name)
@@ -1543,10 +1544,10 @@ def refreshTrustAccessToken(req):
 
 class classSetCustomInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	customType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def setCustomInfo(req):
 	api_uri = "clientcustom/v2/setCustomInfo"
