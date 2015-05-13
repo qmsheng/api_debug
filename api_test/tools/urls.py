@@ -162,7 +162,7 @@ urlpatterns = patterns (
 			url(r'^addDepositInfo$',addDepositInfo),
 			url(r'^businessRegisterInfo$',businessRegisterInfo),
 			#--用户捐赠
-			url(r'^donateDaoke $',donateDaoke),
+			url(r'^donateDaoke$',donateDaoke),
 			url(r'^fetchDonationInfo$',fetchDonationInfo),
 			url(r'^getAllRankInfo$',getAllRankInfo),
 			url(r'^getRewardRank$',getRewardRank),

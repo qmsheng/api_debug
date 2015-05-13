@@ -42,8 +42,8 @@ import string
 # apiHost = "192.168.184.136"
 
 # 点6
-# appKey = "2064302565"
-# secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
+appKey = "2064302565"
+secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 #沙箱
 # accountID = "SsYYnzgsdw"
