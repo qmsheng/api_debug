@@ -25,7 +25,6 @@ import string
 
 # appKey = '4223273916'
 # secret = 'DA00D00CBFECD61E4EA4FA830FCEEA4C96C5683D'
-
 # appKey = "184269830"
 # secret = "931E498698AB2D9B1D93F419E572D2ACCA981488"
 
@@ -34,8 +33,8 @@ import string
 
 
 # KLD01 
-appKey = "3994652484"
-secret = "E4C9D76696927B1D964B451B031601E6539EA583"
+# appKey = "3994652484"
+# secret = "E4C9D76696927B1D964B451B031601E6539EA583"
 
 
 # apiHost = "115.231.73.17"
@@ -48,8 +47,8 @@ secret = "E4C9D76696927B1D964B451B031601E6539EA583"
 
 #沙箱
 # accountID = "SsYYnzgsdw"
-# appKey = "1111111111"
-# secret = "34F9CD6587D98875D2D4FA393C42ADE63298230F"
+# appKey = "3862015082"
+# secret = "5693BBB00ED6BE8A606A4D6A866DF8466DC70D10"
 
 
 api_server_list = {
@@ -515,6 +514,114 @@ OAUTH_DEVELOPER_TYPE = (
 )
 
 #===============OAUTH END=====================
+
+#===============REWARD BEGIN==================
+
+REWARD_RETURN_TYPE =  (
+	('1','1--个人'),
+	('2','2--企业'),
+	('3','3--混合'),
+)
+
+REWARD_PARENT_ID = (
+	('0','0--否'),
+	('1','1--是'),
+)
+
+REWARD_IS_CHANNEL = (
+	('0','0--否'),
+	('1','1--是'),
+)
+
+REWARD_ALLOW_EXCHANGE = (
+	('0','0--不允许'),
+	('1','1--允许'),	
+)
+
+REWARD_BONUS_TYPE = (
+	('0','0--无奖金'),
+	('1','1--密点'),	
+	('2','2--微点'),
+	('4','4--其它方式'),
+)
+
+REWARD_SHARE_INFO = (
+	('0','0--不分享'),
+	('1','1--分享'),
+)
+
+REWARD_BONUS_RETURN_TARGET_TYPE = (
+	('1','1--个人'),
+	('2','2--个人与企业,个人优先'),	
+	('3','3--个人与企业,企业优先'),
+	('4','4--企业'),
+)
+
+#isAnonymous
+#0代表不匿名,1代表匿名
+REWARD_IS_ANONYMOUS =  (
+	('0','0--不匿名'),
+	('1','1--匿名'),
+)
+
+#donatedType
+#1为金钱,2为里程
+REWARD_DONATED_TYPE = (
+	('1','1--金钱'),
+	('2','2--里程'),
+)
+
+#regularDonation
+#0为否,1为每月自动捐赠,2每季度自动捐赠,3每年自动捐赠
+REWARD_REGULAR_DONATION = (
+	('0','0--否'),
+	('1','1--每月自动捐赠'),
+	('2','2--每季自动捐赠'),
+	('3','3--每年自动捐赠'),
+)
+
+#type
+#排名类型１代表日排名，２代表周排名，３代表月>排名，４代表总排名(若type为４则time可以不传)
+REWARD_TYPE = (
+	('1','1--日排名'),
+	('2','2--周排名'),
+	('3','3--月排名'),
+	('4','4--总排名'),
+)
+
+#withdrawType
+#1:支付宝提现,2:手机话费充值,3:企业帐户提现(目前只能为1,2,3)
+REWARD_WITHDRAW_TYPE = (
+	('1','1--支付宝提现'),
+	('2','2--手机话费充值'),
+	('3','3--企业帐户提现'),
+)
+
+#withdrawAccountType
+#1代表支付宝提现,2代表手机话费充值(目前只能为1,2)
+REWARD_WITHDRAW_ACCOUNT_TYPE = (
+	('1','1--支付宝提现'),
+	('2','2--手机话费充值'),
+)
+
+#showType
+#展示类型(默认为1，表示显示给普通用户查看，2表示显示给高级用户)
+REWARD_WITHDRAW_ACCOUNT_TYPE = (
+	('1','1--显示给普通用户'),
+	('2','2--显示给高级用户'),
+)
+
+#moneyType
+#1：获取密点类型，空：实际金额(其他报错)
+REWARD_WITHDRAW_ACCOUNT_TYPE = (
+	('1','1--获取密点类型'),
+	('','空--实际金额'),
+)
+
+#===============REWARD END====================
+
+
+
 
 class classApplySecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
@@ -1538,6 +1645,14 @@ class classRefreshTrustAccessToken(forms.Form):
 def refreshTrustAccessToken(req):
 	api_uri = "oauth/v2/refreshTrustAccessToken"
 	return templateApp(req, classRefreshTrustAccessToken, api_uri , sys._getframe().f_code.co_name)
+
+class classGetScopeInfo(forms.Form):
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getScopeInfo(req):
+	api_uri = "oauth/v2/getScopeInfo"
+	return templateApp(req, classGetScopeInfo, api_uri , sys._getframe().f_code.co_name)
 #=====================================oauth end======================================================
 
 #=====================================clientcustom begin======================================================
@@ -1662,6 +1777,227 @@ class classUserFinanceConsume(forms.Form):
 def userFinanceConsume(req):
 	api_uri = "rewardapi/v2/userFinanceConsume"
 	return templateApp(req, classUserFinanceConsume, api_uri , sys._getframe().f_code.co_name )
+
+class classBusinessRegisterInfo(forms.Form):
+	username = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	businessName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	returnType = forms.ChoiceField( choices = REWARD_RETURN_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	parentID = forms.ChoiceField( choices = REWARD_PARENT_ID, widget = forms.Select(attrs={'class':'form-control'} ) )
+	isChannel = forms.ChoiceField( choices = REWARD_IS_CHANNEL, widget = forms.Select(attrs={'class':'form-control'} ) )
+	receiverName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	receiverPhone = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	receiverAddress = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	allowExchange = forms.ChoiceField( choices = REWARD_ALLOW_EXCHANGE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	bonusType = forms.ChoiceField( choices = REWARD_BONUS_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	shareInfo = forms.ChoiceField( choices = REWARD_SHARE_INFO, widget = forms.Select(attrs={'class':'form-control'} ) )
+	bonusReturnTarget = forms.ChoiceField( choices = REWARD_BONUS_RETURN_TARGET_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	userBonusMax = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	businessBonusMax = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	bonusReturnMonth = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def businessRegisterInfo(req):
+	api_uri = "rewardapi/v2/businessRegisterInfo"
+	return templateApp(req, classBusinessRegisterInfo, api_uri , sys._getframe().f_code.co_name )
+
+
+#=====
+class classDonateDaoke(forms.Form):
+	donatorAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	donatorName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	daokePassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	isAnonymous = forms.ChoiceField( choices = REWARD_IS_ANONYMOUS, widget = forms.Select(attrs={'class':'form-control'} ) )
+	amount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	donatedType = forms.ChoiceField( choices = REWARD_DONATED_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	regularDonation = forms.ChoiceField( choices = REWARD_REGULAR_DONATION, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def donateDaoke(req):
+	api_uri = "rewardapi/v2/donateDaoke"
+	return templateApp(req, classDonateDaoke , api_uri, sys._getframe().f_code.co_name)
+
+class classFetchDonationInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+
+def fetchDonationInfo(req):
+	api_uri = "rewardapi/v2/fetchDonationInfo"
+	return templateApp(req, classFetchDonationInfo , api_uri, sys._getframe().f_code.co_name)
+
+class classGetAllRankInfo(forms.Form):
+	time = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	type = forms.ChoiceField( choices = REWARD_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	startRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	endRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def getAllRankInfo(req):
+	api_uri = "rewardapi/v2/getAllRankInfo"
+	return templateApp(req, classGetAllRankInfo , api_uri, sys._getframe().f_code.co_name)
+
+class classGetRewardRank(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	time = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	type = forms.ChoiceField( choices = REWARD_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getRewardRank(req):
+	api_uri = "rewardapi/v2/getRewardRank"
+	return templateApp(req, classGetRewardRank , api_uri, sys._getframe().f_code.co_name)
+
+class classGetAllWithdrawInfo(forms.Form):
+	withdrawType = forms.ChoiceField( choices = REWARD_WITHDRAW_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getAllWithdrawInfo(req):
+	api_uri = "rewardapi/v2/getAllWithdrawInfo"
+	return templateApp(req, classGetAllWithdrawInfo , api_uri, sys._getframe().f_code.co_name)
+
+class classTransferEnterpriseAccount(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	businessID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	receiptID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def transferEnterpriseAccount(req):
+	api_uri = "rewardapi/v2/transferEnterpriseAccount"
+	return templateApp(req, classTransferEnterpriseAccount , api_uri, sys._getframe().f_code.co_name)
+
+class classTransferOwnAccount(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	receiptID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccountType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def transferOwnAccount(req):
+	api_uri = "rewardapi/v2/transferOwnAccount"
+	return templateApp(req, classTransferOwnAccount , api_uri, sys._getframe().f_code.co_name)
+
+class classGetBalanceDetail(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getBalanceDetail(req):
+	api_uri = "rewardapi/v2/getBalanceDetail"
+	return templateApp(req, classGetBalanceDetail , api_uri, sys._getframe().f_code.co_name)
+
+class classFetchDepositHistory(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	showType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	isAll = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def fetchDepositHistory(req):
+	api_uri = "rewardapi/v2/fetchDepositHistory"
+	return templateApp(req, classFetchDepositHistory , api_uri, sys._getframe().f_code.co_name)
+
+class classGetUserDepositInfo(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	showType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getUserDepositInfo(req):
+	api_uri = "rewardapi/v2/getUserDepositInfo"
+	return templateApp(req, classGetUserDepositInfo , api_uri, sys._getframe().f_code.co_name)
+
+class classGetRewardAmountByMileage(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	mileage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getRewardAmountByMileage(req):
+	api_uri = "rewardapi/v2/getRewardAmountByMileage"
+	return templateApp(req, classGetRewardAmountByMileage , api_uri, sys._getframe().f_code.co_name)
+
+class classCrashRecharge(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	changedAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	businessID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def crashRecharge(req):
+	api_uri = "rewardapi/v2/crashRecharge"
+	return templateApp(req, classCrashRecharge , api_uri, sys._getframe().f_code.co_name)
+
+class classApplyWithdrawDeposit(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	depositPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	applyWithdrawAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	autoWithdraw = forms.ChoiceField( choices = REWARD_IS_ANONYMOUS, widget = forms.Select(attrs={'class':'form-control'} ) )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def applyWithdrawDeposit(req):
+	api_uri = "rewardapi/v2/applyWithdrawDeposit"
+	return templateApp(req, classApplyWithdrawDeposit , api_uri, sys._getframe().f_code.co_name)
+
+class classApplyWithdrawMoney(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	daokePassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	applyWithdrawAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccountType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	callbackURL = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	tradeNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def applyWithdrawMoney(req):
+	api_uri = "rewardapi/v2/applyWithdrawMoney"
+	return templateApp(req, classApplyWithdrawMoney , api_uri, sys._getframe().f_code.co_name)
+
+class classGetUserFinanceInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+
+def getUserFinanceInfo(req):
+	api_uri = "rewardapi/v2/getUserFinanceInfo"
+	return templateApp(req, classGetUserFinanceInfo , api_uri, sys._getframe().f_code.co_name)
+
+class classTransferOwnAccount(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+	receiptID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAmount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	withdrawAccountType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def transferOwnAccount(req):
+	api_uri = "rewardapi/v2/transferOwnAccount"
+	return templateApp(req, classTransferOwnAccount , api_uri, sys._getframe().f_code.co_name)
+
+
+class classConfirmCancelContract(forms.Form):
+	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def confirmCancelContract(req):
+	api_uri = "rewardapi/v2/confirmCancelContract"
+	return templateApp(req, classConfirmCancelContract , api_uri, sys._getframe().f_code.co_name)
+
+class classConfirmExchangeGoods(forms.Form):
+	oldIMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	newIMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def confirmExchangeGoods(req):
+	api_uri = "rewardapi/v2/confirmExchangeGoods"
+	return templateApp(req, classConfirmExchangeGoods , api_uri, sys._getframe().f_code.co_name)
+
 
 #=====================================reward end======================================================
 

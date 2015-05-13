@@ -65,7 +65,7 @@
 
   <a href="javascript:;" class="list-group-item apiGather " data="oauth">授权OAUTH</a>
   <ul class="nav apiList none" name="授权OAUTH" style="display: none;">
-     <!--<li><a href="getScopeInfo" data="getScopeInfo" name="oauth" target= "right" >获取授权范围</a></li>
+     <!--<li>
     <li><a href="getTrustAuthCode" data="getTrustAuthCode" name="oauth" target= "right" >生成认证码</a></li>
     <li><a href="getTrustAccessCode" data="getTrustAccessCode" name="oauth" target= "right" >获取授权码</a></li>
     <li><a href="refreshTrustAccessToken" data="refreshTrustAccessToken" name="oauth" target= "right" >刷新授权码</a></li> -->
@@ -92,6 +92,7 @@
     <!--<li><a href="getAuthCode" data="getAuthCode" name="clientcustom"  target= "right"  >获取授权码</a></li>
     <li><a href="getAccessToken" data="getAccessToken" name="clientcustom"  target= "right"  >通过授权码获取访问令牌</a></li>
     <li><a href="refreshAccessToken" data="refreshAccessToken" name="clientcustom"  target= "right"  >通过刷新令牌获取访问令牌</a></li> -->
+    <li><a href="getScopeInfo" data="getScopeInfo" name="oauth" target= "right" >获取授权范围</a></li>
     <li><a href="getTrustAuthCode" data="getTrustAuthCode" name="clientcustom"  target= "right"  >获取授权码</a></li>
     <li><a href="getTrustAccessCode" data="getTrustAccessCode" name="clientcustom"  target= "right"  >通过授权码获取访问令牌</a></li>
     <li><a href="refreshTrustAccessToken" data="refreshTrustAccessToken" name="clientcustom"  target= "right"  >通过刷新令牌获取访问令牌</a></li>
@@ -156,7 +157,31 @@
   <a href="javascript:;" class="list-group-item apiGather " data="rewardapi">众酬API</a>
   <ul class="nav apiList none" name="众酬API" style="display: none;">
    <li><a href="addDepositInfo" data="addDepositInfo" name="rewardapi" target= "right" >初始化押金</a></li>
+   <li><a href="businessRegisterInfo" data="businessRegisterInfo" name="rewardapi" target= "right" >添加企业注册信息</a></li>
+
+   <li><a href="donateDaoke" data="donateDaoke" name="rewardapi" target= "right" >道客捐赠</a></li>
+   <li><a href="fetchDonationInfo" data="fetchDonationInfo" name="rewardapi" target= "right" >查询道客捐赠信息</a></li>
+   <li><a href="getAllRankInfo" data="getAllRankInfo" name="rewardapi" target= "right" >查询所有道客的排名信息</a></li>
+   <li><a href="getRewardRank" data="getRewardRank" name="rewardapi" target= "right" >查询某道客的捐赠排名</a></li>
+
+   <li><a href="getAllWithdrawInfo" data="getAllWithdrawInfo" name="rewardapi" target= "right" >获取所有提现信息</a></li>
+   <li><a href="transferEnterpriseAccount" data="transferEnterpriseAccount" name="rewardapi" target= "right" >企业资金转账到提现帐户</a></li>
+   <li><a href="transferOwnAccount" data="transferOwnAccount" name="rewardapi" target= "right" >用户资金转账到提现帐户</a></li>
+
+   <li><a href="getBalanceDetail" data="getBalanceDetail" name="rewardapi" target= "right" >得到用户的资金历史</a></li>
+   <li><a href="fetchDepositHistory" data="fetchDepositHistory" name="rewardapi" target= "right" >得到用户的押金历史</a></li>
+   <li><a href="getUserDepositInfo" data="getUserDepositInfo" name="rewardapi" target= "right" >得到用户的押金信息</a></li>
+   <li><a href="getRewardAmountByMileage" data="getRewardAmountByMileage" name="rewardapi" target= "right" >通过里程计算用户奖金</a></li>
+   <li><a href="crashRecharge" data="crashRecharge" name="rewardapi" target= "right" >终端用户现金充值信息</a></li>
+
+   <li><a href="applyWithdrawDeposit" data="applyWithdrawDeposit" name="rewardapi" target= "right" >用户押金提现</a></li>
+   <li><a href="applyWithdrawMoney" data="applyWithdrawMoney" name="rewardapi" target= "right" >用户资金提现</a></li>
+   <li><a href="getUserFinanceInfo" data="getUserFinanceInfo" name="rewardapi" target= "right" >得到用户的资金信息</a></li>
+   <li><a href="transferOwnAccount" data="transferOwnAccount" name="rewardapi" target= "right" >用户资金转账到提现帐户</a></li>
    <li><a href="userFinanceConsume" data="userFinanceConsume" name="rewardapi" target= "right" >用户资金消费</a></li>
+
+   <li><a href="confirmCancelContract" data="confirmCancelContract" name="rewardapi" target= "right" >用户取消合约</a></li>
+   <li><a href="confirmExchangeGoods" data="confirmExchangeGoods" name="rewardapi" target= "right" >设备确认换货</a></li>
   </ul>
 
   <a href="javascript:;" class="list-group-item apiGather " data="mapapi">地图API</a>

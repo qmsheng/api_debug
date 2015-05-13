@@ -134,6 +134,7 @@ urlpatterns = patterns (
 			url(r'^getPasswordToken$',getPasswordToken),
 
 			#oauth for Trust 
+			url(r'^getScopeInfo$',getScopeInfo),
 			url(r'^getTrustAuthCode$',getTrustAuthCode),
 			url(r'^getTrustAccessCode$',getTrustAccessCode),
 			url(r'^refreshTrustAccessToken$',refreshTrustAccessToken),
@@ -157,9 +158,34 @@ urlpatterns = patterns (
 			#-------------WEME setting end-----------
 
 			#------------reward api begin-----------------------
+			#--添加押金信息
 			url(r'^addDepositInfo$',addDepositInfo),
+			url(r'^businessRegisterInfo$',businessRegisterInfo),
+			#--用户捐赠
+			url(r'^donateDaoke $',donateDaoke),
+			url(r'^fetchDonationInfo$',fetchDonationInfo),
+			url(r'^getAllRankInfo$',getAllRankInfo),
+			url(r'^getRewardRank$',getRewardRank),
+			#--财务打款
+			url(r'^getAllWithdrawInfo$',getAllWithdrawInfo),
+			url(r'^transferEnterpriseAccount$',transferEnterpriseAccount),
+			url(r'^transferOwnAccount$',transferOwnAccount),
+			#--用户查询资金
+			url(r'^getBalanceDetail$',getBalanceDetail),
+			url(r'^fetchDepositHistory$',fetchDepositHistory),
+			url(r'^getUserDepositInfo$',getUserDepositInfo),
+			url(r'^getRewardAmountByMileage$',getRewardAmountByMileage),
+			url(r'^crashRecharge$',crashRecharge),
+			#--用户消费
+			url(r'^applyWithdrawDeposit$',applyWithdrawDeposit),
+			url(r'^applyWithdrawMoney$',applyWithdrawMoney),
+			url(r'^getUserFinanceInfo$',getUserFinanceInfo),
+			url(r'^transferOwnAccount$',transferOwnAccount),
 			url(r'^userFinanceConsume$',userFinanceConsume),
-
+			#--设备取消合约
+			url(r'^confirmCancelContract$',confirmCancelContract),
+			url(r'^confirmExchangeGoods$',confirmExchangeGoods),
+			
 			#------------reward api end-----------------------
 
 
