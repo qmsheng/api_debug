@@ -52,7 +52,7 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 
 api_server_list = {
-	"debug":"192.168.1.207",
+	"debug":"192.168.11.73",
 	"sendbox":"s9ct.mirrtalk.com",
 	# production":"api.daoke.io",  #正式环境
 }
@@ -415,9 +415,10 @@ SECRET_USERKEY = (
 
 #---- 管理频道类型
 MANAGE_SECRET_TYPE = (
-	('1','1--公司管理频道(status  2 关闭频道)'),
-	('2','2--管理员管理频道(status 1 正常 2 禁言用户 3 拉黑用户)')
+	('1','1--公司管理频道(curStatus  2 关闭频道)'),
+	('2','2--管理员管理频道(curStatus 1-正常 / 2-禁言用户/3-拉黑用户)')
 )
+
 #---- 按键类型
 SECRET_CUSTOMTYPE = (
 	('2','2--customType:2(actionType:5)'),
@@ -684,15 +685,16 @@ def modifySecretChannelInfo(req):
 
 
 
-class classManageSecretChannel(forms.Form):
+class classManageSecretChannelUsers(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	infoType = forms.ChoiceField(choices=MANAGE_SECRET_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
-	userAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
+	userAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
 	curStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-def manageSecretChannel(req):
+
+def manageSecretChannelUsers(req):
 	api_uri = "clientcustom/v2/manageSecretChannelUsers"
-	return templateApp(req, classManageSecretChannel, api_uri , sys._getframe().f_code.co_name)
+	return templateApp(req, classManageSecretChannelUsers, api_uri , sys._getframe().f_code.co_name)
 
 
 # class classSetCustomInfo(forms.Form):
@@ -762,14 +764,6 @@ class classVeritySecretChannelMessage(forms.Form):
 def veritySecretChannelMessage(req):
 	api_uri = "clientcustom/v2/veritySecretChannelMessage"
 	return templateApp(req, classVeritySecretChannelMessage, api_uri , sys._getframe().f_code.co_name)
-
-
-class classTTSDemo(forms.Form):
-	text = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
-	
-def TTSDemo(req):
-	api_uri = "dfsapi/v2/txt2voice"
-	return templateApp(req, classTTSDemo, api_uri , sys._getframe().f_code.co_name)
 
 
 class classJoinSecretChannel(forms.Form):
@@ -2158,3 +2152,24 @@ def sendSms(req):
 	return templateApp(req, classSendSms, api_uri , sys._getframe().f_code.co_name )
 #------------------------------------ web  api  ========end===========================
 
+
+
+#---------------------------------------serverChannel ---begin
+
+class classGetServerChannelList(forms.Form):
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"1"}) )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"20"}) )
+
+def getServerChannelList(req):
+	api_uri = "clientcustom/v2/getServerChannelList"
+	return templateApp(req, classGetServerChannelList, api_uri , sys._getframe().f_code.co_name )
+#---------------------------------------serverChannel ---begin
+
+
+class classTTSDemo(forms.Form):
+	text = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def TTSDemo(req):
+	api_uri = "dfsapi/v2/txt2voice"
+	return templateApp(req, classTTSDemo, api_uri , sys._getframe().f_code.co_name)

@@ -37,7 +37,7 @@ urlpatterns = patterns (
 			url(r'^veritySecretChannelMessage$',veritySecretChannelMessage),
 			url(r'^getSecretChannelInfo$',getSecretChannelInfo),
 			url(r'^getUserJoinListSecretChannel$',getUserJoinListSecretChannel),
-			url(r'^manageSecretChannel$',manageSecretChannel),
+			url(r'^manageSecretChannelUsers$',manageSecretChannelUsers),
 			url(r'^setCustomInfo$',setCustomInfo),
 			url(r'^modifySecretChannelInfo$',modifySecretChannelInfo),
 			url(r'^getCustomInfo$',getCustomInfo),
@@ -215,5 +215,9 @@ urlpatterns = patterns (
 
 			
 			#------------------------------------------------
+
+			#---------server channel ---begin
+			url(r'^getServerChannelList$',getServerChannelList),
+			#---------server channel ---begin
 
 	)
