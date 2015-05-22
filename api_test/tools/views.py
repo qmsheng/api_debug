@@ -2058,3 +2058,30 @@ def devicePowerOn(req):
 	api_uri = "config"
 	return templateApp(req, classDevicePowerOn, api_uri  , sys._getframe().f_code.co_name )	
 #------------------------------------ main debug add  api  ========end===========================
+
+
+#------------------------------------ dfs  api  ========end===========================
+
+
+class classTxtToVoice(forms.Form):
+	text = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def txtToVoice(req):
+	api_uri = "dfsapi/v2/txt2voice"
+	return templateApp(req, classTxtToVoice, api_uri , sys._getframe().f_code.co_name )
+
+#------------------------------------ dfs  api  ========end===========================
+
+
+
+#------------------------------------ web  api  ========end===========================
+class classSendSms(forms.Form):
+	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	content= forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' ,'value':"短信测试信息"}) )
+	platform = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	is_times = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+def sendSms(req):
+	api_uri = "webapi/v2/sendSms"
+	return templateApp(req, classSendSms, api_uri , sys._getframe().f_code.co_name )
+#------------------------------------ web  api  ========end===========================
+
