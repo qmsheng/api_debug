@@ -54,8 +54,14 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 api_server_list = {
 	"debug":"192.168.1.207",
 	"sendbox":"s9ct.mirrtalk.com",
-	"production":"api.daoke.io",  #正式环境
+	# production":"api.daoke.io",  #正式环境
 }
+
+ENVI_SERVER_LIST = (
+	("debug","线下调试"),
+	("sendbox","沙箱环境"),
+	# ("production","正式环境"),
+)
 
 api_post_list = {
 	"debug":80,
@@ -159,6 +165,7 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 
 		tmp_appkey = appKey
 		tmp_secret = secret
+
 		if req.session['appKey'] and req.session['secret']:
 			tmp_appkey = req.session['appKey']
 			tmp_secret = req.session['secret']
@@ -206,44 +213,50 @@ def templateApp_Debug(req, template_form,  uri , api_action , api_html = "apifor
 		return render_to_response(api_html,{'form':form, "api_action": api_action , "api_account": req.session['username'] })
 
 
-
-#=======================================login begin=========================================================================
-
-class UserForm(forms.Form):
-	username = forms.CharField()
-
-
-def login(req):
+def templateApp_Login(req, template_form,  uri , api_action , api_html = "user_login.html", api_host = None, api_port = None, before_sign = None, after_sign = None ):
 	if req.method == 'POST':
-		username = req.POST['username']
+		form = template_form(req.POST)
+
+		username = req.POST['accountID']
 		environment = req.POST['environment']
 
-		appKey = req.POST['appKey']
-		secret = req.POST['secret']
+		tmp_appKey = appKey 
+		if req.POST['appKey']:
+			tmp_appKey = req.POST['appKey'].strip()
+
+		tmp_secret = secret
+		if req.POST['secret']:
+			tmp_secret = req.POST['secret'].strip()
 
 		if username and len(username) == 10:
 			req.session['username'] = username
 			req.session['environment'] = environment
-
-			req.session['appKey'] = appKey
-			req.session['secret'] = secret
-
+			if tmp_appKey != None and tmp_secret != None :
+				req.session['appKey'] = tmp_appKey
+				req.session['secret'] = tmp_secret
 			return HttpResponseRedirect("index")
-
 		else:
-			return render_to_response('login.html', { 'error_msg' : "accountID不正确" }  )
+			result_msg = "accountID不正确"
+			return render_to_response(api_html, {'form':form, "api_action": api_action , "result_msg":result_msg } )
 	else:
-		# if req.session['environment']:
-		# 	del req.session['environment']
+		form = template_form()
+		return render_to_response(api_html,{'form':form, "api_action": api_action  })
 
-		# if req.session['appKey']:
-		# 	del req.session['appKey']
 
-		# if req.session['secret']:
-		# 	del req.session['secret']
 
-		uf = UserForm()
-		return render_to_response('login.html',{'uf':uf})
+
+#=======================================login begin=========================================================================
+
+
+class classUserLogin(forms.Form):
+	appKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	secret = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	environment = forms.ChoiceField( choices = ENVI_SERVER_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def login(req):
+	api_uri = ""
+	return templateApp_Login(req, classUserLogin, api_uri , sys._getframe().f_code.co_name )
 
 def logout(req):
 	username = req.session.get('username')
@@ -252,11 +265,11 @@ def logout(req):
 	if req.session['environment']:
 		del req.session['environment']
 
-	# if req.session['appKey']:
-	# 	del req.session['appKey']
+	if req.session['appKey']:
+		del req.session['appKey']
 
-	# if req.session['secret']:
-	# 	del req.session['secret']
+	if req.session['secret']:
+		del req.session['secret']
 
 	return HttpResponseRedirect("login") 
 		
@@ -283,10 +296,15 @@ def top(req):
 		host = api_server_list[tmp_env_flag] 
 		port = api_post_list[tmp_env_flag]
 
-		appkey = req.session['appKey']
-		secret = req.session['secret']
+		tmp_appkey = appKey 
+		if req.session['appKey']:
+			tmp_appkey = req.session['appKey']
 
-		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port , "appkey":appkey ,"secret":secret } )
+		tmp_secret = secret 
+		if req.session['secret']:
+			tmp_secret = req.session['secret']
+
+		return render_to_response('top.html', { 'username' : username , 'server' : server , "host" : host , "port" : port , "appkey":tmp_appkey ,"secret":tmp_secret } )
 	else:
 		return HttpResponseRedirect("login") 
 
@@ -311,6 +329,7 @@ FETCH_SECRET_INFO_TYPE = (
 
 #---- 频道类别
 SECRET_CATALOG_LIST = (
+	('','----全部'),
 	('100101','100101--同事朋友'),
 	('100102','100102--车友会'),
 	('100103','100103--同城交友'),
@@ -334,7 +353,7 @@ SECRET_CATALOG_LIST = (
 )
 #--微频道
 MIC__CATALOG_LIST = (
-
+	('','----全部'),
 	('100101','100101--同事朋友'),
 	('100102','100102--车友会'),
 	('100103','100103--同城交友'),
@@ -618,6 +637,14 @@ REWARD_WITHDRAW_ACCOUNT_TYPE = (
 	('','空--实际金额'),
 )
 
+#消息类型
+SECRET_MESSAGE_TYPE = (
+	('','----全部消息'),
+	('0','0----未处理'),
+	('1','1----同意'),
+	('2','2----拒绝'),
+)
+
 #===============REWARD END====================
 
 
@@ -701,6 +728,7 @@ def fetchSecretChannel(req):
 
 class classSecretMessage(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	status = forms.ChoiceField(choices=SECRET_MESSAGE_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
 
@@ -885,9 +913,19 @@ class classFollowMicroChannel(forms.Form):
 
 
 def followMicroChannel  (req):
-	api_uri = "clientcustom/v2/followMicroChannel  "
+	api_uri = "clientcustom/v2/followMicroChannel"
 	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name)
 
+# 批量关注微频道 2015-05-21 
+class classBatchFollowMicroChannel(forms.Form):
+	uniqueCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "邀请码"   )
+	totalList = forms.CharField( widget=forms.Textarea(attrs={'class':'form-control'}) , label = "用户列表,使用逗号分隔"  )
+
+def batchFollowMicroChannel(req):
+	api_uri = "clientcustom/v2/batchFollowMicroChannel"
+	return templateApp(req, classBatchFollowMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+# 批量关注微频道 2015-05-21 
 
 class classGetBossFollowList(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" )
@@ -1342,7 +1380,7 @@ class classGetUserData(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	field = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	
+
 def getUserData(req):
 	api_uri = "accountapi/v2/getUserData"
 	return templateApp(req, classGetUserData, api_uri , sys._getframe().f_code.co_name)
@@ -2010,6 +2048,41 @@ class classCheckIsOnline(forms.Form):
 def checkIsOnline(req):
 	api_uri = "clientcustom/v3/checkIsOnline"
 	return templateApp(req, classCheckIsOnline, api_uri , sys._getframe().f_code.co_name ,api_html = "apiform_ex.html"  )
+
+
+#==================================
+# 获取用户按键 2015-05-22 
+class classGetUserkeyInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+
+def getUserkeyInfo(req):
+	api_uri = "clientcustom/v2/getUserkeyInfo"
+	return templateApp(req, classGetUserkeyInfo, api_uri , sys._getframe().f_code.co_name )
+
+# 设置用户按键 2015-05-22
+
+class classSetUserkeyInfo(forms.Form):
+	tmp_parameter = '''{"count":"3",
+"list": [{	"actionType":"3","customType":"10",
+			"customParameter":""
+		},
+		{	"actionType":"4","customType":"10",
+			"customParameter":"000000153"
+		},
+		{	"actionType":"5","customType":"10",
+			"customParameter":"000000153"
+		}]
+}'''
+
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	# initial  初始化值 
+	parameter = forms.CharField(initial= tmp_parameter , widget=forms.Textarea(attrs={'class':'form-control','cols':800} ) )
+
+def setUserkeyInfo(req):
+	api_uri = "clientcustom/v2/setUserkeyInfo"
+	return templateApp(req, classSetUserkeyInfo, api_uri , sys._getframe().f_code.co_name )
+
 #====================================weme setting end
 
 

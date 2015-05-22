@@ -48,6 +48,7 @@ urlpatterns = patterns (
 			#------------user microChannel begin----------------------------
 			url(r'^modifyMicroChannel$',modifyMicroChannel ),
 			url(r'^followMicroChannel$',followMicroChannel ),
+			url(r'^batchFollowMicroChannel$',batchFollowMicroChannel),
 			url(r'^applyMicroChannel$',applyMicroChannel ),
 			url(r'^checkApplyMicroChannel$',checkApplyMicroChannel ),
 			url(r'^fetchMicroChannel$',fetchMicroChannel ),
@@ -155,6 +156,8 @@ urlpatterns = patterns (
 
 			#-------------WEME setting begin---------
 			url(r'^checkIsOnline$',checkIsOnline),
+			url(r'^getUserkeyInfo$',getUserkeyInfo),
+			url(r'^setUserkeyInfo$',setUserkeyInfo),
 			#-------------WEME setting end-----------
 
 			#------------reward api begin-----------------------
