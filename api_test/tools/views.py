@@ -52,7 +52,7 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 
 api_server_list = {
-	"debug":"192.168.11.73",
+	"debug":"192.168.1.207",
 	"sendbox":"s9ct.mirrtalk.com",
 	# production":"api.daoke.io",  #正式环境
 }
