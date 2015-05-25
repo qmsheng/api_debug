@@ -52,24 +52,28 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 
 api_server_list = {
+	"jzs":"192.168.11.73",
 	"debug":"192.168.1.207",
 	"sendbox":"s9ct.mirrtalk.com",
 	# production":"api.daoke.io",  #正式环境
 }
 
 ENVI_SERVER_LIST = (
+	("jzs","jzs localhost"),
 	("debug","线下调试"),
 	("sendbox","沙箱环境"),
 	# ("production","正式环境"),
 )
 
 api_post_list = {
+	"jzs":80,
 	"debug":80,
 	"sendbox":80,
 	"production":80,
 }
 
 api_remark_list = {
+	"jzs":"jzs localhost",
 	"debug":"线下调试",
 	"sendbox":"沙箱环境",
 	"production":"正式环境",
@@ -810,8 +814,8 @@ def quitSecretChannel(req):
 
 class classGetCatalogInfo(forms.Form):
 	channelType = forms.ChoiceField( choices = GET_CHANNEL_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' ,  'value':"1" } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' ,  'value':"20"} ))
 
 def getCatalogInfo(req):
 	api_uri = "clientcustom/v2/getCatalogInfo"
@@ -1478,8 +1482,8 @@ def updateIdentityInfo(req):
 #管理后台获取开发者信息
 class classManageDeveloperInfo(forms.Form):
 	status = forms.ChoiceField( choices = GET_DEVELOPER_TYPE, widget = forms.Select(attrs={'class':'form-control'}))
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1" } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20" } ))
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
@@ -1679,8 +1683,8 @@ def refreshTrustAccessToken(req):
 	return templateApp(req, classRefreshTrustAccessToken, api_uri , sys._getframe().f_code.co_name)
 
 class classGetScopeInfo(forms.Form):
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1" } ))
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20" } ))
 
 def getScopeInfo(req):
 	api_uri = "oauth/v2/getScopeInfo"
@@ -1852,8 +1856,8 @@ class classFetchDonationInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	pageCount =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1" })  )
+	pageCount =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20" })  )
 
 
 def fetchDonationInfo(req):
@@ -1865,8 +1869,8 @@ class classGetAllRankInfo(forms.Form):
 	type = forms.ChoiceField( choices = REWARD_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 	startRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
 
 def getAllRankInfo(req):
 	api_uri = "rewardapi/v2/getAllRankInfo"
@@ -1915,8 +1919,8 @@ class classGetBalanceDetail(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
 	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 
 def getBalanceDetail(req):
@@ -1927,8 +1931,8 @@ class classFetchDepositHistory(forms.Form):
 	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
 	showType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 	isAll = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
