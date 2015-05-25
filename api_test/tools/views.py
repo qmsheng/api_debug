@@ -2156,14 +2156,15 @@ def sendSms(req):
 
 #---------------------------------------serverChannel ---begin
 
-class classGetServerChannelList(forms.Form):
-	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+class classGetCustomDefineInfo(forms.Form):
+	defineName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
+	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"1"}) )
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"20"}) )
 
-def getServerChannelList(req):
-	api_uri = "clientcustom/v2/getServerChannelList"
-	return templateApp(req, classGetServerChannelList, api_uri , sys._getframe().f_code.co_name )
+def getCustomDefineInfo(req):
+	api_uri = "clientcustom/v2/getCustomDefineInfo"
+	return templateApp(req, classGetCustomDefineInfo, api_uri , sys._getframe().f_code.co_name )
 #---------------------------------------serverChannel ---begin
 
 

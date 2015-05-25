@@ -217,7 +217,7 @@ urlpatterns = patterns (
 			#------------------------------------------------
 
 			#---------server channel ---begin
-			url(r'^getServerChannelList$',getServerChannelList),
+			url(r'^getCustomDefineInfo$',getCustomDefineInfo),
 			#---------server channel ---begin
 
 	)
