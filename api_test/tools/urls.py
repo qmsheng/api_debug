@@ -99,8 +99,8 @@ urlpatterns = patterns (
 			url(r'^getDynamicVerifycode$',getDynamicVerifycode),
 			url(r'^checkDynamicVerifycode$',checkDynamicVerifycode),
 
-			url(r'^getPassWordVerifyCode$',getPassWordVerifyCode),
-			url(r'^resetPassWordWithMobileVerifyCode$',resetPassWordWithMobileVerifyCode),
+			url(r'^resetPasswordInitVerifyCode$',resetPasswordInitVerifyCode),
+			url(r'^resetPasswordCheckVerifyCode$',resetPasswordCheckVerifyCode),
 			#--------------道客账户 end-------------------------
 
 			#--------------daoke oauth---------------

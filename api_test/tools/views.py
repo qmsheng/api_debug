@@ -1400,22 +1400,22 @@ def checkDynamicVerifycode(req):
 	return templateApp(req, classCheckDynamicVerifycode, api_uri , sys._getframe().f_code.co_name)
 
 #手机用户获取密码重置的验证码
-class classGetPassWordVerifyCode(forms.Form):
+class classResetPasswordInitVerifyCode(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def getPassWordVerifyCode(req):
-	api_uri = "accountapi/v2/getPassWordVerifyCode"
-	return templateApp(req, classGetPassWordVerifyCode, api_uri , sys._getframe().f_code.co_name)
+def resetPasswordInitVerifyCode(req):
+	api_uri = "accountapi/v2/resetPasswordInitVerifyCode"
+	return templateApp(req, classResetPasswordInitVerifyCode, api_uri , sys._getframe().f_code.co_name)
 
 #手机用户根据验证码重置新密码
-class classResetPassWordWithMobileVerifyCode(forms.Form):
+class classResetPasswordCheckVerifyCode(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	verifyCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	newPassword = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
-def resetPassWordWithMobileVerifyCode(req):
-	api_uri = "accountapi/v2/resetPassWordWithMobileVerifyCode"
-	return templateApp(req, classResetPassWordWithMobileVerifyCode, api_uri , sys._getframe().f_code.co_name)	
+def resetPasswordCheckVerifyCode(req):
+	api_uri = "accountapi/v2/resetPasswordCheckVerifyCode"
+	return templateApp(req, classResetPasswordCheckVerifyCode, api_uri , sys._getframe().f_code.co_name)	
 #=====================================道客账户 end======================================================
 
 
