@@ -29,6 +29,10 @@ urlpatterns = patterns (
 
 			#------------user secret channel  begin-------------------------
 			url(r'^getCatalogInfo$',getCatalogInfo),
+
+			url(r'^transferSecretChannel$',transferSecretChannel),
+			url(r'^dissolveSecretChannel$',dissolveSecretChannel),
+
 			url(r'^applySecretChannel$',applySecretChannel),
 			url(r'^fetchSecretChannel$',fetchSecretChannel),
 			url(r'^secretChannelMessage$',secretChannelMessage),

@@ -822,6 +822,26 @@ def getCatalogInfo(req):
 	return templateApp(req, classGetCatalogInfo, api_uri , sys._getframe().f_code.co_name)
 
 
+#  转移频道
+class classTransferSecretChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	password = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	receiverAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def transferSecretChannel(req):
+	api_uri = "clientcustom/v2/transferSecretChannel"
+	return templateApp(req, classTransferSecretChannel, api_uri , sys._getframe().f_code.co_name)
+
+# 解散频道
+class classDissolveSecretChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
+	password = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def dissolveSecretChannel(req):
+	api_uri = "clientcustom/v2/dissolveSecretChannel"
+	return templateApp(req, classDissolveSecretChannel, api_uri , sys._getframe().f_code.co_name)
 
 
 #=====================================主播频道 begin==========================================
