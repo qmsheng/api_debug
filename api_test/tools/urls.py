@@ -105,6 +105,7 @@ urlpatterns = patterns (
 
 			url(r'^resetPasswordInitVerifyCode$',resetPasswordInitVerifyCode),
 			url(r'^resetPasswordCheckVerifyCode$',resetPasswordCheckVerifyCode),
+			url(r'^createImei$',createImei),
 			#--------------道客账户 end-------------------------
 
 			#--------------daoke oauth---------------

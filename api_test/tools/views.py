@@ -1447,7 +1447,22 @@ class classResetPasswordCheckVerifyCode(forms.Form):
 
 def resetPasswordCheckVerifyCode(req):
 	api_uri = "accountapi/v2/resetPasswordCheckVerifyCode"
-	return templateApp(req, classResetPasswordCheckVerifyCode, api_uri , sys._getframe().f_code.co_name)	
+	return templateApp(req, classResetPasswordCheckVerifyCode, api_uri , sys._getframe().f_code.co_name)
+	
+#生成IMEI
+class classCreateImei(forms.Form):
+	company = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	businessID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	isThirdModel = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	clientappKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	mirrtalkCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	mirrtalkInforemarks = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	mirrtalkHistoryremarks = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+def createImei(req):
+	api_uri = "accountapi/v2/createImei"
+	return templateApp(req, classCreateImei, api_uri , sys._getframe().f_code.co_name)
 #=====================================道客账户 end======================================================
 
 
