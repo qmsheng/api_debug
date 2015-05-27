@@ -675,7 +675,7 @@ class classApplySecretChannel(forms.Form):
 	channelCatalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	openType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
-	isVerity = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
+	isVerify = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 
 def applySecretChannel(req):
@@ -688,11 +688,13 @@ class classModifySecretChannelInfo(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelOpenType = forms.ChoiceField( choices = SECRET_OPENTYPE , widget = forms.Select(attrs={'class':'form-control'})  )
+	channelIsVerify  = forms.ChoiceField( choices = SECRET_VERITY_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	channelIntro = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelCatalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	channelLogoUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	channelCitycode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})   )
 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
 
 def modifySecretChannelInfo(req):
 	api_uri = "clientcustom/v2/modifySecretChannelInfo"
