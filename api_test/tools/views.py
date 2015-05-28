@@ -410,6 +410,12 @@ SECRET_VERITY_TYPE = (
 	('1','1--加入需求验证'),
 )
 
+SECRET_VERITY_QUERY = (
+	('','--全部'),
+	('0','0--加入不需要验证'),
+	('1','1--加入需求验证'),
+)
+
 #---- 群聊频道审核类型
 SECRET_CHECKSTATUS_TYPE = (
 	('1','1--通过'),
@@ -734,7 +740,7 @@ class classFetchSecretChannel(forms.Form):
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
-	status = forms.ChoiceField(choices=JOIN_CHANNEL_STATUS  , widget = forms.Select(attrs={'class':'form-control'}   ) )
+	isVerify = forms.ChoiceField( choices = SECRET_VERITY_QUERY ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	catalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
 	infoType = forms.ChoiceField(choices=FETCH_SECRET_INFO_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
