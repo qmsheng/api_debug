@@ -42,9 +42,7 @@ urlpatterns = patterns (
 			url(r'^getSecretChannelInfo$',getSecretChannelInfo),
 			url(r'^getUserJoinListSecretChannel$',getUserJoinListSecretChannel),
 			url(r'^manageSecretChannelUsers$',manageSecretChannelUsers),
-			url(r'^setCustomInfo$',setCustomInfo),
 			url(r'^modifySecretChannelInfo$',modifySecretChannelInfo),
-			url(r'^getCustomInfo$',getCustomInfo),
 
 			#------------user secret channel  end-------------------------
 			url(r'^getCatalogInfo$',getCatalogInfo  ),
@@ -149,7 +147,6 @@ urlpatterns = patterns (
 			#--------------daoke oauth---------------
 
 			#-------------clientcustom setting begin---------
-			url(r'^setCustomInfo$',setCustomInfo),
 			url(r'^setSubscribeMsg$',setSubscribeMsg),
 			url(r'^applyMicroChannel$',applyMicroChannel),
 			url(r'^checkApplyMicroChannel$',checkApplyMicroChannel),

@@ -334,18 +334,6 @@ FETCH_SECRET_INFO_TYPE = (
 #---- 频道类别
 SECRET_CATALOG_LIST = (
 	('','----全部'),
-	('100101','100101--同事朋友'),
-	('100102','100102--车友会'),
-	('100103','100103--同城交友'),
-	('100104','100104--兴趣爱好'),
-	('100105','100105--行业交流'),
-	('100106','100106--吃喝玩乐'),
-	('100107','100107--品牌产品'),
-	('100108','100108--线下服务'),
-	('100109','100109--交通出行'),
-	('100110','100110--应急救援'),
-	('100111','100111--两性情感'),
-	('100112','100112--地区频道'),
 	('300001','300001--的哥的姐'),
 	('300002','300002--汽车之家'),
 	('300003','300003--星座天文'),
@@ -721,20 +709,6 @@ def manageSecretChannelUsers(req):
 	return templateApp(req, classManageSecretChannelUsers, api_uri , sys._getframe().f_code.co_name)
 
 
-# class classSetCustomInfo(forms.Form):
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
-# 	actionType = forms.ChoiceField( choices = SECRET_USERKEY,  widget=forms.Select(attrs={'class':'form-control'} ) )
-# 	customType = forms.ChoiceField( choices = SECRET_CUSTOMTYPE, widget=forms.Select(attrs={'class':'form-control' })  ) 
-# 	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' })  ) 
-
-# def setCustomInfo(req):
-# 	api_uri = "clientcustom/v2/setCustomInfo"
-# 	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name)
-
-
-
-
-
 class classFetchSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
@@ -742,7 +716,6 @@ class classFetchSecretChannel(forms.Form):
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	isVerify = forms.ChoiceField( choices = SECRET_VERITY_QUERY ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	catalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
-	infoType = forms.ChoiceField(choices=FETCH_SECRET_INFO_TYPE  , widget = forms.Select(attrs={'class':'form-control'}   ) )
 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"1" } ))
 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"20" } ))
 
@@ -762,18 +735,6 @@ class classSecretMessage(forms.Form):
 def secretChannelMessage(req):
 	api_uri = "clientcustom/v2/secretChannelMessage"
 	return templateApp(req, classSecretMessage, api_uri , sys._getframe().f_code.co_name)
-
-
-
-class classGetCustomInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' , 'value':"4" } ))
-
-
-def getCustomInfo(req):
-	api_uri = "clientcustom/v2/getCustomInfo"
-	return templateApp(req, classGetCustomInfo, api_uri , sys._getframe().f_code.co_name)
-
 
 
 class classVeritySecretChannelMessage(forms.Form):
@@ -1764,16 +1725,6 @@ def getScopeInfo(req):
 
 #=====================================clientcustom begin======================================================
 
-class classSetCustomInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	customType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	customParameter = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-def setCustomInfo(req):
-	api_uri = "clientcustom/v2/setCustomInfo"
-	return templateApp(req, classSetCustomInfo, api_uri , sys._getframe().f_code.co_name )
 
 class classSetSubscribeMsg(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
