@@ -1206,7 +1206,7 @@ def getAccountIDFromMobile(req):
 #获取用户自定义参数
 class classGetCustomArgs(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
-	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def getCustomArgs(req):
 	api_uri = "accountapi/v2/getCustomArgs"
@@ -1841,7 +1841,7 @@ class classBusinessRegisterInfo(forms.Form):
 	mobile = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	businessName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	returnType = forms.ChoiceField( choices = REWARD_RETURN_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
-	parentID = forms.ChoiceField( choices = REWARD_PARENT_ID, widget = forms.Select(attrs={'class':'form-control'} ) )
+	parentID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) )
 	isChannel = forms.ChoiceField( choices = REWARD_IS_CHANNEL, widget = forms.Select(attrs={'class':'form-control'} ) )
 	receiverName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	receiverPhone = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
@@ -1878,8 +1878,8 @@ class classFetchDonationInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1" })  )
-	pageCount =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20" })  )
+	startPage =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount =	forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 
 
 def fetchDonationInfo(req):
@@ -1891,8 +1891,8 @@ class classGetAllRankInfo(forms.Form):
 	type = forms.ChoiceField( choices = REWARD_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 	startRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endRank = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 
 def getAllRankInfo(req):
 	api_uri = "rewardapi/v2/getAllRankInfo"
@@ -1941,8 +1941,8 @@ class classGetBalanceDetail(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 
 def getBalanceDetail(req):
@@ -1953,8 +1953,8 @@ class classFetchDepositHistory(forms.Form):
 	IMEI = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	startTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	endTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"1"})  )
-	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control',  'value':"20"})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	showType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
 	isAll = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
 	moneyType = forms.ChoiceField( choices = REWARD_WITHDRAW_ACCOUNT_TYPE, widget = forms.Select(attrs={'class':'form-control'} ) )
@@ -2126,13 +2126,15 @@ def updatePOIAttr(req):
 
 #------------------------------------ main debug add  api  ========begin===========================
 class classUserConfigInfo(forms.Form):
-	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
-	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	domain = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } )) 
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	customArgs = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	remark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def userConfigInfo(req):
-	api_uri = "accountapi/v2/getCustomArgs"
+	api_uri = "accountapi/v2/setCustomArgs"
 	return templateApp(req, classUserConfigInfo, api_uri , sys._getframe().f_code.co_name )
-
 
 class classSetAppKeySecret(forms.Form):
 	appKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
