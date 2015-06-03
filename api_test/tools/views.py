@@ -328,7 +328,7 @@ FETCH_SECRET_INFO_TYPE = (
 	('1', '1--群聊频道广场'),
 	('2', '2--已创建的频道'),
 	('3', '3--已加入的频道'),
-	('4', '4--等待验证/驳回的频道')
+	('4', '4--所在频道(创建+加入)')
 )
 
 #---- 频道类别
@@ -435,6 +435,10 @@ SECRET_CUSTOMTYPE = (
 	('6','6--customType:6(actionType:4)')
 )
 
+
+#频道类型
+GET_CHANNEL_TYPE = (
+=======
 #得到在线列表
 FETCH_SECRET_ONLINE_INFO = (
 	('','可不传，自动识别普通用户或管理员'),
@@ -444,7 +448,6 @@ FETCH_SECRET_ONLINE_INFO = (
 
 #频道类型
 GET_CHANNEL_TYPE = (
-
 	('1','1--主播频道'),
 	('2','2--群聊频道')
 )
@@ -713,6 +716,7 @@ class classFetchSecretChannel(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" ) 
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
+	infoType = forms.ChoiceField( choices = FETCH_SECRET_INFO_TYPE ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ))
 	isVerify = forms.ChoiceField( choices = SECRET_VERITY_QUERY ,  widget=forms.Select(attrs={'class':'form-control'})  )
 	catalogID = forms.ChoiceField( choices = SECRET_CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
@@ -1734,64 +1738,6 @@ def setSubscribeMsg(req):
 	api_uri = "clientcustom/v2/setSubscribeMsg"
 	return templateApp(req, classSetSubscribeMsg, api_uri , sys._getframe().f_code.co_name )
 
-# <<<<<<< HEAD
-# class classApplyMicroChannel(forms.Form):
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-# 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
-# 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	openType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	isVerity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-# def applyMicroChannel(req):
-# 	api_uri = "clientcustom/v2/applyMicroChannel"
-# 	return templateApp(req, classApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
-
-# class classCheckApplyMicroChannel(forms.Form):
-# 	checkAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
-# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	checkRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-# def checkApplyMicroChannel(req):
-# 	api_uri = "clientcustom/v2/checkApplyMicroChannel"
-# 	return templateApp(req, classCheckApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
-
-# class classFetchMicroChannel(forms.Form):
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
-# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	catalogID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-
-# def fetchMicroChannel(req):
-# 	api_uri = "clientcustom/v2/fetchMicroChannel"
-# 	return templateApp(req, classFetchMicroChannel, api_uri , sys._getframe().f_code.co_name )
-
-# class classFollowMicroChannel(forms.Form):
-# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
-# 	uniqueCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	followType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
-
-
-# def followMicroChannel(req):
-# 	api_uri = "clientcustom/v2/followMicroChannel"
-# 	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name )
-# =======
-# >>>>>>> 000bceea47371730bdc901ac40276e59f84d636f
 
 class classResetInviteUniqueCode(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
