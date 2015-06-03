@@ -680,6 +680,8 @@ def applySecretChannel(req):
 	return templateApp(req, classApplySecretChannel, api_uri , sys._getframe().f_code.co_name)
 
 
+
+
 class classModifySecretChannelInfo(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' }) , label = "accountID" ) 
 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
@@ -1174,6 +1176,7 @@ class classFixUserInfo(forms.Form):
 	userEmail = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 	gender = forms.ChoiceField( choices = GENDER_TYPE , widget = forms.Select(attrs = {'class':'form-control' } ))
 	accessToken = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	idNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
 
 def fixUserInfo(req):
 	api_uri = "accountapi/v2/fixUserInfo"
@@ -1738,6 +1741,67 @@ def setSubscribeMsg(req):
 	api_uri = "clientcustom/v2/setSubscribeMsg"
 	return templateApp(req, classSetSubscribeMsg, api_uri , sys._getframe().f_code.co_name )
 
+<<<<<<< HEAD
+# <<<<<<< HEAD
+# class classApplyMicroChannel(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+# 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelCatalogID = forms.ChoiceField( choices = CATALOG_LIST, widget = forms.Select(attrs={'class':'form-control'} ) )
+# 	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	openType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	isVerity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+# def applyMicroChannel(req):
+# 	api_uri = "clientcustom/v2/applyMicroChannel"
+# 	return templateApp(req, classApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+# class classCheckApplyMicroChannel(forms.Form):
+# 	checkAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	checkRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelRemark = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+# def checkApplyMicroChannel(req):
+# 	api_uri = "clientcustom/v2/checkApplyMicroChannel"
+# 	return templateApp(req, classCheckApplyMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+# class classFetchMicroChannel(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	checkStatus = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	infoType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	cityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	catalogID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+
+# def fetchMicroChannel(req):
+# 	api_uri = "clientcustom/v2/fetchMicroChannel"
+# 	return templateApp(req, classFetchMicroChannel, api_uri , sys._getframe().f_code.co_name )
+
+# class classFollowMicroChannel(forms.Form):
+# 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
+# 	uniqueCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	followType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+# 	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+
+# def followMicroChannel(req):
+# 	api_uri = "clientcustom/v2/followMicroChannel"
+# 	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name )
+# =======
+
+=======
+>>>>>>> 405794454831212b3b1b5a21ef27a74e15cf1600
 
 class classResetInviteUniqueCode(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
@@ -2099,6 +2163,103 @@ def devicePowerOn(req):
 #------------------------------------ main debug add  api  ========end===========================
 
 
+
+#------------------------------------ Datacheck add  api  ========begin===========================
+class classBatchFollowMicroChannel(forms.Form):
+	appKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	totalList = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def batchFollowMicroChannel(req):
+	api_uri = "/clientcustom/v2/batchFollowMicroChannel"
+	return templateApp(req, classBatchFollowMicroChannel, api_uri , sys._getframe().f_code.co_name)
+
+class classUserShutUp(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	totalTime = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+
+def userShutUp(req):
+	api_uri = "/clientcustom/v2/userShutUp"
+	return templateApp(req, classUserShutUp, api_uri , sys._getframe().f_code.co_name)
+
+class classFetchUserShutUpInfo(forms.Form):
+	accountIDs = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	count = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def fetchUserShutUpInfo(req):
+	api_uri = "/clientcustom/v2/fetchUserShutUpInfo"
+	return templateApp(req, classFetchUserShutUpInfo, api_uri , sys._getframe().f_code.co_name)
+
+class classSetUserkeyInfo(forms.Form):
+	tmp_parameter = '''{"count":"3",
+"list": [{	"actionType":"3","customType":"10",
+			"customParameter":""
+		},
+		{	"actionType":"4","customType":"10",
+			"customParameter":"000000153"
+		},
+		{	"actionType":"5","customType":"10",
+			"customParameter":"000000153"
+		}]
+}'''
+
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
+	# initial  初始化值 
+	parameter = forms.CharField(initial= tmp_parameter , widget=forms.Textarea(attrs={'class':'form-control','cols':800} ) )
+
+def setUserkeyInfo(req):
+	api_uri = "clientcustom/v2/setUserkeyInfo"
+	return templateApp(req, classSetUserkeyInfo, api_uri , sys._getframe().f_code.co_name )
+
+class classGetUserkeyInfo(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getUserkeyInfo(req):
+	api_uri = "/clientcustom/v2/getUserkeyInfo"
+	return templateApp(req, classGetUserkeyInfo, api_uri , sys._getframe().f_code.co_name)
+
+class classGetCustomDefineInfo(forms.Form):
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	pageCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	defineName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	actionType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def getCustomDefineInfo(req):
+	api_uri = "/clientcustom/v2/getCustomDefineInfo"
+	return templateApp(req, classGetCustomDefineInfo, api_uri , sys._getframe().f_code.co_name)
+
+class classCreateRegionChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	startPage = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelName = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelIntroduction = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	isVerity = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelCityCode = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelCatalogID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	openType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelKeyWords = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	channelCatalogUrl = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def createRegionChannel(req):
+	api_uri = "/clientcustom/v2/createRegionChannel"
+	return templateApp(req, classCreateRegionChannel, api_uri , sys._getframe().f_code.co_name)
+
+
+class classTransferSecretChannel(forms.Form):
+	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	password = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+	receiverAccountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'})  )
+	channelNumber = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ))
+
+def transferSecretChannel(req):
+	api_uri = "/clientcustom/v2/transferSecretChannel"
+	return templateApp(req, classTransferSecretChannel, api_uri , sys._getframe().f_code.co_name)
+#------------------------------------ Datacheck add  api  ========end===========================
+
+
+
 #------------------------------------ dfs  api  ========end===========================
 
 
@@ -2124,8 +2285,6 @@ def sendSms(req):
 	return templateApp(req, classSendSms, api_uri , sys._getframe().f_code.co_name )
 #------------------------------------ web  api  ========end===========================
 
-
-
 #---------------------------------------serverChannel ---begin
 
 class classGetCustomDefineInfo(forms.Form):
@@ -2148,3 +2307,4 @@ class classTTSDemo(forms.Form):
 def TTSDemo(req):
 	api_uri = "dfsapi/v2/txt2voice"
 	return templateApp(req, classTTSDemo, api_uri , sys._getframe().f_code.co_name)
+
