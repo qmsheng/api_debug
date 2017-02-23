@@ -52,31 +52,43 @@ secret = "BB9318B102E320C09B8AB9D5229B5668DB1C00D0"
 
 
 api_server_list = {
-	"jzs":"192.168.11.73",
-	"debug":"192.168.1.207",
-	"sendbox":"s9ct.mirrtalk.com",
-	# production":"api.daoke.io",  #正式环境
+	"ulucu":"midware.api.ulucu.com",
+	"debug":"developer.inthd.xyz",
+	"sendbox":"b.authority.intay.xyz",
+	"production":"api.daoke.io",  #正式环境
+	"qms":"172.30.20.88",
+	"stat":"stat.intay.xyz",
+	"weixin":"api.weixin.qq.com",
 }
 
 ENVI_SERVER_LIST = (
-	("jzs","jzs localhost"),
-	("debug","线下调试"),
-	("sendbox","沙箱环境"),
-	# ("production","正式环境"),
+	("ulucu","悠络客midware.api.ulucu.com"),
+	("debug","悠络客developer.inthd.xyz"),
+	("sendbox","悠络客b.authority.intay.xyz"),
+	("production","正式环境"),
+	("qms","本地环境172.30.20.88"),
+	("stat","统计相关stat.intay.xyz"),
+	("weixin","api.weixin.qq.com"),
 )
 
 api_post_list = {
-	"jzs":80,
+	"ulucu":80,
 	"debug":80,
 	"sendbox":80,
 	"production":80,
+	"qms":80,
+	"stat":80,
+	"weixin":80,
 }
 
 api_remark_list = {
-	"jzs":"jzs localhost",
-	"debug":"线下调试",
-	"sendbox":"沙箱环境",
+	"ulucu":"悠络客midware.api.ulucu.com",
+	"debug":"悠络客developer.inthd.xyz",
+	"sendbox":"安眼开发环境",
 	"production":"正式环境",
+	"qms":"本地环境172.30.20.88",
+	"stat":"统计相关stat.intay.xyz",
+	"weixin":"api.weixin.qq.com",
 }
 
 global_env_flag = ""
@@ -152,13 +164,15 @@ def get_sign(dict, appkey_v , secret_v ):
 	tmp_str = tuple_append(tuple)
 	print("really get sign:", tmp_str )
 	sign = hashlib.sha1(tmp_str).hexdigest().upper()
-	print( sign )
+	print( 'qms_1111111111111 ' + sign )
 	del dict['secret']
 	return sign
 
 
 def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html", api_host = None, api_port = None, before_sign = None, after_sign = None ):
 	if req.method == 'POST':
+		print req.method
+		# req.enctype = "multipart/form-data"
 		form = template_form(req.POST)
 		dict = {} 
 		for item in req.POST:
@@ -174,7 +188,7 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 			tmp_appkey = req.session['appKey']
 			tmp_secret = req.session['secret']
 
-		dict['sign'] = get_sign(dict, tmp_appkey , tmp_secret)
+		# dict['sign'] = get_sign(dict, tmp_appkey , tmp_secret)
 
 		if after_sign != None:
 			after_sign(dict)
@@ -191,8 +205,9 @@ def templateApp(req, template_form,  uri , api_action , api_html = "apiform.html
 			print result_msg
 			pass
 
-		return render_to_response(api_html, {'form':form, "api_action": api_action ,  "api_account": req.session['username'] , "uri": uri,  "request_msg":request_msg, "result_msg":result_msg, "object_data":object_data } )
+		return render_to_response(api_html, {'form':form, "api_action": api_action ,  "api_account": req.session['username'] , "uri": uri,  "request_msg":request_msg, "result_msg":result_msg, "object_data":object_data} )
 	else:
+		print req.method
 		form = template_form()
 		return render_to_response(api_html,{'form':form, "api_action": api_action , "api_account": req.session['username'] })
 
@@ -436,9 +451,6 @@ SECRET_CUSTOMTYPE = (
 )
 
 
-#频道类型
-GET_CHANNEL_TYPE = (
-=======
 #得到在线列表
 FETCH_SECRET_ONLINE_INFO = (
 	('','可不传，自动识别普通用户或管理员'),
@@ -1741,7 +1753,7 @@ def setSubscribeMsg(req):
 	api_uri = "clientcustom/v2/setSubscribeMsg"
 	return templateApp(req, classSetSubscribeMsg, api_uri , sys._getframe().f_code.co_name )
 
-<<<<<<< HEAD
+
 # <<<<<<< HEAD
 # class classApplyMicroChannel(forms.Form):
 # 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'}) , label = "accountID" )
@@ -1800,8 +1812,7 @@ def setSubscribeMsg(req):
 # 	return templateApp(req, classFollowMicroChannel, api_uri , sys._getframe().f_code.co_name )
 # =======
 
-=======
->>>>>>> 405794454831212b3b1b5a21ef27a74e15cf1600
+
 
 class classResetInviteUniqueCode(forms.Form):
 	accountID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control' } ) , label = "accountID")
@@ -2307,4 +2318,126 @@ class classTTSDemo(forms.Form):
 def TTSDemo(req):
 	api_uri = "dfsapi/v2/txt2voice"
 	return templateApp(req, classTTSDemo, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+class classQuickCreateImei(forms.Form):
+	company = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	model = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	useType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	brandType = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	businessID = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	isThirdModel = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	clientappKey = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	mirrtalkCount = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	mirrtalkInforemarks = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	mirrtalkHistoryremarks = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	clientIP = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	status = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def quickCreateImei(req):
+	api_uri = "/accountapi/v2/quickCreateImei"
+	return templateApp(req, classQuickCreateImei, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+
+# ulucu
+class classDetail_get(forms.Form):
+	token = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	platform = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def detail_get(req):
+	api_uri = "/user_authority/detail_get"
+	return templateApp(req, classDetail_get, api_uri , sys._getframe().f_code.co_name)
+
+
+class classDeveloperGet(forms.Form):
+	type = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	appid = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def developerGet(req):
+	api_uri = "/developer/get"
+	return templateApp(req, classDeveloperGet, api_uri , sys._getframe().f_code.co_name)
+
+
+class classOpenGet(forms.Form):
+	appid = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	api_id = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def openGet(req):
+	api_uri = "/open/get"
+	return templateApp(req, classOpenGet, api_uri , sys._getframe().f_code.co_name)
+
+
+class classSoncePerDay(forms.Form):
+	msg = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def SoncePerDay(req):
+	api_uri = "/middleware/img/once_per_day"
+	return templateApp(req, classSoncePerDay, api_uri , sys._getframe().f_code.co_name)
+
+
+class classDeviceOffline(forms.Form):
+	msg = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def DeviceOffline(req):
+	api_uri = "/middleware/alarm/device_offline"
+	return templateApp(req, classDeviceOffline, api_uri , sys._getframe().f_code.co_name)
+
+
+class classSnapshot(forms.Form):
+	cmd = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def snapshot(req):
+	api_uri = "/middleware/img/snapshot"
+	return templateApp(req, classSnapshot, api_uri , sys._getframe().f_code.co_name)
+
+
+# API通用接口
+class classGeneralGet(forms.Form):
+	msg = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def generalAll(req):
+	api_uri = "/general/all"
+	return templateApp(req, classGeneralGet, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+
+class classShakeUp(forms.Form):
+	data = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	
+def shakeUp(req):
+	api_uri = "/middleware/img/shake_up"
+	return templateApp(req, classShakeUp, api_uri , sys._getframe().f_code.co_name)
+
+
+
+class classImageGet(forms.Form):
+	text = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control'} ) )
+	# file_name = forms.FileField()
+	# file = forms.FileField()
+	# photo = forms.ImageField(upload_to='product', verbose_name='图片')  
+	
+def imageGet(req):
+	api_uri = "/image/get"
+	# api_uri = "/uploadfile"
+	return templateApp(req, classImageGet, api_uri , sys._getframe().f_code.co_name)
+
+
+
+
+class classGetToken(forms.Form):
+	grant_type = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"client_credential"} ) )
+	appid = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"wx969f44e69c22e02a"} ) )
+	secret = forms.CharField( widget=forms.TextInput(attrs={'class':'form-control','value':"1e2671f364a1d1a8b655f3784b5d53e5"} ) )
+	# grant_type=client_credential&appid=wx969f44e69c22e02a&secret=1e2671f364a1d1a8b655f3784b5d53e5
+
+def getToken(req):
+	api_uri = "/cgi-bin/token"
+	return templateApp(req, classGetToken, api_uri , sys._getframe().f_code.co_name)
 

@@ -21,7 +21,7 @@
 
 		<tr>
 			<td>
-				<form class="form-horizontal" role="form" action = {{ api_action }} method="post">
+				<form class="form-horizontal" role="form" action = {{ api_action }} method="post" enctype="multipart/form-data">
 				<table width = "600">
 				{%   for field in form %}
 					<tr>
@@ -33,7 +33,7 @@
 								<!-- {{ field }}  -->
 								<input class="form-control col-sm-3" id="id_accountID" name="accountID" type="text" value= "{{ api_account }}" />
 							{% else %}
-								{{ field }} 
+								{{ field }}
 							{% endif %}
 						</td>
 					</tr>
